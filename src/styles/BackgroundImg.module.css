@@ -1,0 +1,47 @@
+.backgroundContainer{
+    position: relative;
+    overflow: hidden;
+    width: 1920px;
+    height: 1080px;
+    z-index: -99;
+}
+.ball1 {
+    width: 2767px;
+    position: absolute;
+    left: 75px;
+    top: -600px;
+    /* z-index: 1; */
+}
+
+.ball2{
+    width: 1633px;
+    position: absolute;
+    left: -485px;
+    top: 555px;
+}
+.ball3{
+    width: 480px;
+    position: absolute;
+    left: -60px;
+    top: 356px;
+}
+.ball4{
+    width: 491px;
+    position: absolute;
+    left: 1491px;
+    top: 560px;
+}
+.ring1{
+    width: 1080px;
+    position: absolute;
+    left: 119px;
+    top: -129px;
+}
+.ring2{
+    width: 1080px;
+    position: absolute;
+    left: 714px;
+    top: 584px;
+    rotate: 103deg;
+    transform: scale(-1, -1);
+}

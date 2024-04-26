@@ -1,0 +1,16 @@
+@import url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff');
+
+*{
+    font-family: 'Pretendard-Regular';
+    margin: 0;
+    color: white;
+    text-shadow: 0 0 10px #00000020;
+}
+body{
+    background-color: #E9E9E9;
+}
+.center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

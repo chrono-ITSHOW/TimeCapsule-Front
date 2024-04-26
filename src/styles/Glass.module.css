@@ -1,0 +1,16 @@
+.glassFullContainer{
+    position: absolute;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    z-index: -10;
+}
+.glassFull{
+    width: 100vw;
+    height: 722px;
+    background-color: #9696960f;
+    backdrop-filter: blur(32px);
+    box-shadow: 0 0 42px;
+    color: #00000020;
+    border: solid 1px #ffffff96;
+}

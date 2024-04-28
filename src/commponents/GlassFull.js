@@ -5,7 +5,7 @@ import styles from '../styles/Glass.module.css'
 function BackgroundImg() {
 
     return (
-        <div className={styles['glassFullContainer']}>
+        <div className={styles['glassContainer']}>
             <div className={styles['glassFull']}></div>
         </div>
     );

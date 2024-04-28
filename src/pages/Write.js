@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Icon } from '@iconify/react';
+import Glass from '../commponents/\bGlass';
+import BackgroundImg from '../commponents/BackgroundImg';
 
 function Write() {
     const navigate = useNavigate();
@@ -11,7 +13,8 @@ function Write() {
 
     return (
         <div>
-            
+            <Glass />
+            <BackgroundImg />
         </div>
     );
 }

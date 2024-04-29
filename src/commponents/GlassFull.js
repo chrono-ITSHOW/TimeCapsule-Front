@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { Icon } from '@iconify/react';
 import styles from '../styles/Glass.module.css'
 
 function BackgroundImg() {

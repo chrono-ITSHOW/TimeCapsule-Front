@@ -47,10 +47,10 @@ const Write = () => {
 
   useEffect(() => {
     const styledTextElement = document.getElementById('styledText');
-    if (styledTextElement.scrollHeight > 460) {
-      setIsHeightExceeded(true);
-    } else {
+    if (styledTextElement.scrollHeight <= 450) {
       setIsHeightExceeded(false);
+    } else {
+      setIsHeightExceeded(true);
     }
   }, [inputText]);
 
@@ -65,7 +65,6 @@ const Write = () => {
                   placeholder='편지 내용을 작성해주세요!' 
                   onChange={handleInputChange} 
                   className={`${styles['textareaStyle']} ${isHeightExceeded ? styles['textareaError'] : ''}`}></textarea>
-                {/* <label className={styles['labelStyle']}><input type='checkbox'></input>2025년의 너에게</label> */}
                 <div className={styles["check"]}>
                     <input type="checkbox" className={styles["check1"]} onChange={handleCheckboxChange}></input>
                     <label for="check1" style={{fontSize:"24px"}}>2025년의 너에게</label>

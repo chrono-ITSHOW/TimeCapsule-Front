@@ -19,8 +19,8 @@ function Start() {
                     <p className={styles['subText']}>To you in the future</p>
                     <h1 className={styles['mainText']}>time capsule</h1>
                 </div>
-                <button className={styles['btnStyle']} onClick={handleClick}>작성하기<Icon icon="formkit:right"></Icon></button>
-                <button className={styles['galleryBtn']}>갤러리 바로가기<Icon icon="ep:right"></Icon></button>
+                <button className={styles['btnStyle']} onClick={() => handleClick('/Write')}>작성하기<Icon icon="formkit:right"></Icon></button>
+                <button className={styles['galleryBtn']} onClick={() => handleClick('/Gallery')}>갤러리 바로가기<Icon icon="ep:right"></Icon></button>
             </div>
             
             <GlassFull />

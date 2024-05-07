@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Glass from '../commponents/Glass';
 import BackgroundImg from '../commponents/BackgroundImg';
 import styles from '../styles/Capsule.module.css'
@@ -7,6 +7,74 @@ import { BsPen } from "react-icons/bs";
 import { PiEraser } from "react-icons/pi";
 
 const Capsule = () => {
+
+    // canvas 그리기
+    const canvasRef = useRef(null);
+    const contextRef = useRef(null);
+
+    const [ctx, setCtx] = useState();
+    const [isDrawing, setIsDrawing] = useState(false);
+
+    useEffect(() => {
+        const canvas = canvasRef.current;
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const context = canvas.getContext('2d');
+        context.lineWidth = 5;
+        contextRef.current = context;
+        context.strokeStyle = 'black';
+
+        setCtx(context);
+    }, []);
+
+    const startDrawing = () => {
+        setIsDrawing(true);
+    };
+
+    const finishDrawing = () => {
+        setIsDrawing(false);
+    };
+
+    const drawing = ({nativeEvent}) => {
+        const {offsetX, offsetY} = nativeEvent;
+
+        if(drawingMode) {
+            if(ctx) {
+                if(!isDrawing) {
+                    ctx.beginPath();
+                    ctx.moveTo(offsetX, offsetY);
+                }
+                else {
+                    ctx.lineTo(offsetX, offsetY);
+                    ctx.stroke();
+                }
+            }
+        }
+    };
+
+    // .draw, .remove 클릭 시 색 변경 및 .draw를 클릭했을 때만 canvas가 그려지기
+    const [isDrawActive, setIsDrawActive] = useState(false); 
+    const [isRemoveActive, setIsRemoveActive] = useState(false); 
+    const [drawingMode, setDrawingMode] = useState(false); 
+
+    const handleDrawClick = () => {
+        setIsDrawActive(true);
+        setIsRemoveActive(false);
+        setDrawingMode(true);
+    };
+
+    const handleRemoveClick = () => {
+        setIsDrawActive(false);
+        setIsRemoveActive(true); 
+
+        if(ctx) {
+            ctx.strokeStyle = '#FFF';
+        }
+    };
+
+    const drawIconStyle = isDrawActive ? { fill: '#FF4836' } : {};
+    const removeIconStyle = isRemoveActive ? { fill: '#FF4836' } : {};
 
     return (
         <div>
@@ -19,16 +87,16 @@ const Capsule = () => {
                 <div className={styles['capsuleBox']}>
                     <div className={styles['button']}>
 
-                        <div className={styles['draw']}>
-                            <BsPen className={styles['draw-icon']}/>
+                        <div className={styles['draw']} onClick={handleDrawClick}>
+                            <BsPen className={styles['draw-icon']} style={drawIconStyle} />
                         </div>
-                        <div className={styles['remove']}>
-                            <PiEraser className={styles['remove-icon']} />
+                        <div className={styles['remove']} onClick={handleRemoveClick}>
+                            <PiEraser className={styles['remove-icon']} style={removeIconStyle} />
                         </div>
                     </div>
 
                     <div className={styles['canvasRectangle']}>
-                        <canvas></canvas>
+                        <canvas ref={canvasRef} onMouseDown={startDrawing} onMouseUp={finishDrawing} onMouseMove={drawing} onMouseLeave={finishDrawing}></canvas>
                     </div>
 
                     <div className={styles['canvasCircle']}>

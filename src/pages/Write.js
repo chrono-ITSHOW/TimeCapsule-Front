@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Glass from '../commponents/\bGlass';
+import Glass from '../commponents/Glass';
 import BackgroundImg from '../commponents/BackgroundImg';
 import Input from '../commponents/input';
 import styles from '../styles/Write.module.css'
+import Popup from '../commponents/Popup';
 
 const Write = () => {
   const [inputText, setInputText] = useState('');

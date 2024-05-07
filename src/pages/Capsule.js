@@ -58,19 +58,17 @@ const Capsule = () => {
     const [isRemoveActive, setIsRemoveActive] = useState(false); 
     const [drawingMode, setDrawingMode] = useState(false); 
 
-    const handleDrawClick = () => {
+    const handleDrawClick = (context) => {
         setIsDrawActive(true);
         setIsRemoveActive(false);
         setDrawingMode(true);
+        ctx.strokeStyle = 'black';
     };
 
-    const handleRemoveClick = () => {
+    const handleRemoveClick = (context) => {
         setIsDrawActive(false);
         setIsRemoveActive(true); 
-
-        if(ctx) {
-            ctx.strokeStyle = '#FFF';
-        }
+        ctx.strokeStyle = 'white';
     };
 
     const drawIconStyle = isDrawActive ? { fill: '#FF4836' } : {};

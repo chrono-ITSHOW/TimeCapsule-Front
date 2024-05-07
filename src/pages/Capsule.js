@@ -17,15 +17,26 @@ const Capsule = () => {
 
     useEffect(() => {
         const canvas = canvasRef.current;
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
         const context = canvas.getContext('2d');
-        context.lineWidth = 5;
         contextRef.current = context;
         context.strokeStyle = 'black';
 
+        const resizeCanvas = () => {
+            canvas.width = canvas.parentElement.clientWidth;
+            canvas.height = canvas.parentElement.clientHeight;
+            context.lineWidth = 5;
+        };
+
+        window.addEventListener('resize', resizeCanvas);
+
         setCtx(context);
+        resizeCanvas();
+
+        return () => {
+            window.removeEventListener('resize', resizeCanvas);
+        }
+        
+
     }, []);
 
     const startDrawing = () => {

@@ -82,8 +82,8 @@ const Capsule = () => {
         ctx.strokeStyle = 'white';
     };
 
-    const drawIconStyle = isDrawActive ? { fill: '#FF4836' } : {};
-    const removeIconStyle = isRemoveActive ? { fill: '#FF4836' } : {};
+    const drawIconStyle = isDrawActive ? { fill: '#FF4836', cursor: 'url("/images/draw.svg"), auto' } : {};
+    const removeIconStyle = isRemoveActive ? { fill: '#FF4836', cursor: 'url("/images/remove.svg"), auto' } : {};
 
     return (
         <div>

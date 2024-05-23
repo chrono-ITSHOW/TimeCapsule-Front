@@ -68,22 +68,25 @@ const Capsule = () => {
     const [isDrawActive, setIsDrawActive] = useState(false); 
     const [isRemoveActive, setIsRemoveActive] = useState(false); 
     const [drawingMode, setDrawingMode] = useState(false); 
+    const [canvasStyle, setCanvasStyle] = useState({});
 
     const handleDrawClick = (context) => {
         setIsDrawActive(true);
         setIsRemoveActive(false);
         setDrawingMode(true);
         ctx.strokeStyle = 'black';
+        setCanvasStyle({ cursor: 'url("/images/draw.svg"), auto' });
     };
 
     const handleRemoveClick = (context) => {
         setIsDrawActive(false);
         setIsRemoveActive(true); 
         ctx.strokeStyle = 'white';
+        setCanvasStyle({ cursor: 'url("/images/remove.svg"), auto' });
     };
 
-    const drawIconStyle = isDrawActive ? { fill: '#FF4836', cursor: 'url("/images/draw.svg"), auto' } : {};
-    const removeIconStyle = isRemoveActive ? { fill: '#FF4836', cursor: 'url("/images/remove.svg"), auto' } : {};
+    const drawIconStyle = isDrawActive ? { fill: '#FF4836' } : {};
+    const removeIconStyle = isRemoveActive ? { fill: '#FF4836' } : {};
 
     return (
         <div>
@@ -104,8 +107,8 @@ const Capsule = () => {
                         </div>
                     </div>
 
-                    <div className={styles['canvasRectangle']}>
-                        <canvas ref={canvasRef} onMouseDown={startDrawing} onMouseUp={finishDrawing} onMouseMove={drawing} onMouseLeave={finishDrawing}></canvas>
+                    <div className={styles['canvasRectangle']} style={canvasStyle}>
+                        <canvas ref={canvasRef} onMouseDown={startDrawing} onMouseUp={finishDrawing} onMouseMove={drawing} onMouseLeave={finishDrawing} />
                     </div>
 
                     <div className={styles['canvasCircle']}>

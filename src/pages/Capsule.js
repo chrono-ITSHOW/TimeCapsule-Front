@@ -76,7 +76,7 @@ const Capsule = () => {
         setIsDrawActive(true);
         setIsRemoveActive(false);
         setDrawingMode(true);
-        setCanvasStyle({ cursor: 'url("/images/draw.svg"), auto' });
+        setCanvasStyle({ cursor: 'url("/images/draw.svg") 0 32, auto' });
         setShowPalette(prev => !prev); 
         ctx.strokeStyle = currentColor;
     };
@@ -84,7 +84,7 @@ const Capsule = () => {
     const handleRemoveClick = () => {
         setIsDrawActive(false);
         setIsRemoveActive(true); 
-        setCanvasStyle({ cursor: 'url("/images/remove.svg"), auto' });
+        setCanvasStyle({ cursor: 'url("/images/remove.svg") 0 32, auto' });
         setShowPalette(false);
         ctx.strokeStyle = 'white';
     };

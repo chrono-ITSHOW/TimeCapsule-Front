@@ -70,22 +70,30 @@ const Capsule = () => {
     const [drawingMode, setDrawingMode] = useState(false); 
     const [canvasStyle, setCanvasStyle] = useState({});
     const [showPalette, setShowPalette] = useState(false);
+    const [currentColor, setCurrentColor] = useState('black');
 
-    const handleDrawClick = (context) => {
+    const handleDrawClick = () => {
         setIsDrawActive(true);
         setIsRemoveActive(false);
         setDrawingMode(true);
-        ctx.strokeStyle = 'black';
         setCanvasStyle({ cursor: 'url("/images/draw.svg"), auto' });
         setShowPalette(prev => !prev); 
+        ctx.strokeStyle = currentColor;
     };
 
-    const handleRemoveClick = (context) => {
+    const handleRemoveClick = () => {
         setIsDrawActive(false);
         setIsRemoveActive(true); 
-        ctx.strokeStyle = 'white';
         setCanvasStyle({ cursor: 'url("/images/remove.svg"), auto' });
         setShowPalette(false);
+        ctx.strokeStyle = 'white';
+    };
+
+    const changeColor = (color) => {
+        setCurrentColor(color);
+        if (isDrawActive) {
+            ctx.strokeStyle = color;
+        }
     };
 
     const drawIconStyle = isDrawActive ? { fill: '#FF4836' } : {};
@@ -109,11 +117,11 @@ const Capsule = () => {
                             </div>
                             <div className={`${styles['paletteBox']} ${!showPalette && styles['hide-component']}`}>
                                 <div className={styles['palette']} ref={paletteRef}>
-                                    <div className={`${styles['color']} ${styles['red']}`}></div>
-                                    <div className={`${styles['color']} ${styles['yellow']}`}></div>
-                                    <div className={`${styles['color']} ${styles['green']}`}></div>
-                                    <div className={`${styles['color']} ${styles['blue']}`}></div>
-                                    <div className={`${styles['color']} ${styles['purple']}`}></div>
+                                    <div className={`${styles['color']} ${styles['red']}`} onClick={() => changeColor('#FF4836')}></div>
+                                    <div className={`${styles['color']} ${styles['yellow']}`} onClick={() => changeColor('#FFE55A')}></div>
+                                    <div className={`${styles['color']} ${styles['green']}`} onClick={() => changeColor('#00E132')}></div>
+                                    <div className={`${styles['color']} ${styles['blue']}`} onClick={() => changeColor('#4C94FF')}></div>
+                                    <div className={`${styles['color']} ${styles['purple']}`} onClick={() => changeColor('#B14EFF')}></div>
                                 </div>
                             </div>
                         </div>

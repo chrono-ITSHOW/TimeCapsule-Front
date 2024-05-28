@@ -61,6 +61,7 @@
 
 .palette {
     height: 318px;
+    cursor: pointer;
     overflow: hidden;
     border-radius: 30px;
     margin: 59px 0 0 6px;

@@ -117,11 +117,12 @@ const Capsule = () => {
                             </div>
                             <div className={`${styles['paletteBox']} ${!showPalette && styles['hide-component']}`}>
                                 <div className={styles['palette']} ref={paletteRef}>
-                                    <div className={`${styles['color']} ${styles['red']}`} onClick={() => changeColor('#FF4836')}></div>
-                                    <div className={`${styles['color']} ${styles['yellow']}`} onClick={() => changeColor('#FFE55A')}></div>
-                                    <div className={`${styles['color']} ${styles['green']}`} onClick={() => changeColor('#00E132')}></div>
-                                    <div className={`${styles['color']} ${styles['blue']}`} onClick={() => changeColor('#4C94FF')}></div>
-                                    <div className={`${styles['color']} ${styles['purple']}`} onClick={() => changeColor('#B14EFF')}></div>
+                                    <div className={`${styles['color']} ${styles['red']} ${currentColor === '#FF4836' ? styles['selected-color'] : ''} `} onClick={() => changeColor('#FF4836')}></div>
+                                    <div className={`${styles['color']} ${styles['yellow']}  ${currentColor === '#FFE55A' ? styles['selected-color'] : ''} `} onClick={() => changeColor('#FFE55A')}></div>
+                                    <div className={`${styles['color']} ${styles['green']}  ${currentColor === '#00E132' ? styles['selected-color'] : ''} `} onClick={() => changeColor('#00E132')}></div>
+                                    <div className={`${styles['color']} ${styles['blue']}  ${currentColor === '#4C94FF' ? styles['selected-color'] : ''} `} onClick={() => changeColor('#4C94FF')}></div>
+                                    <div className={`${styles['color']} ${styles['purple']}  ${currentColor === '#B14EFF' ? styles['selected-color'] : ''} `} onClick={() => changeColor('#B14EFF')}></div>
+                                    <div className={`${styles['color']} ${styles['black']}  ${currentColor === 'black' ? styles['selected-color'] : ''}`} onClick={() => changeColor('black')}></div>
                                 </div>
                             </div>
                         </div>

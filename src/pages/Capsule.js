@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Glass from '../commponents/Glass';
 import BackgroundImg from '../commponents/BackgroundImg';
-import styles from '../styles/Capsule.module.css'
+import styles from '../styles/Capsule.module.css';
 
 import { BsPen } from "react-icons/bs";
 import { PiEraser } from "react-icons/pi";
@@ -11,7 +11,8 @@ const Capsule = () => {
     // canvas 그리기
     const canvasRef = useRef(null);
     const contextRef = useRef(null);
-
+    const paletteRef = useRef();
+    
     const [ctx, setCtx] = useState();
     const [isDrawing, setIsDrawing] = useState(false);
 
@@ -34,8 +35,7 @@ const Capsule = () => {
 
         return () => {
             window.removeEventListener('resize', resizeCanvas);
-        }
-        
+        }  
 
     }, []);
 
@@ -69,20 +69,31 @@ const Capsule = () => {
     const [isRemoveActive, setIsRemoveActive] = useState(false); 
     const [drawingMode, setDrawingMode] = useState(false); 
     const [canvasStyle, setCanvasStyle] = useState({});
+    const [showPalette, setShowPalette] = useState(false);
+    const [currentColor, setCurrentColor] = useState('black');
 
-    const handleDrawClick = (context) => {
+    const handleDrawClick = () => {
         setIsDrawActive(true);
         setIsRemoveActive(false);
         setDrawingMode(true);
-        ctx.strokeStyle = 'black';
         setCanvasStyle({ cursor: 'url("/images/draw.svg"), auto' });
+        setShowPalette(prev => !prev); 
+        ctx.strokeStyle = currentColor;
     };
 
-    const handleRemoveClick = (context) => {
+    const handleRemoveClick = () => {
         setIsDrawActive(false);
         setIsRemoveActive(true); 
-        ctx.strokeStyle = 'white';
         setCanvasStyle({ cursor: 'url("/images/remove.svg"), auto' });
+        setShowPalette(false);
+        ctx.strokeStyle = 'white';
+    };
+
+    const changeColor = (color) => {
+        setCurrentColor(color);
+        if (isDrawActive) {
+            ctx.strokeStyle = color;
+        }
     };
 
     const drawIconStyle = isDrawActive ? { fill: '#FF4836' } : {};
@@ -98,9 +109,21 @@ const Capsule = () => {
                 
                 <div className={styles['capsuleBox']}>
                     <div className={styles['button']}>
-
-                        <div className={styles['draw']} onClick={handleDrawClick}>
-                            <BsPen className={styles['draw-icon']} style={drawIconStyle} />
+                        <div className={styles['draw-container']}>
+                            <div className={styles['draw-box']}>
+                                <div className={styles['draw']} onClick={handleDrawClick}>
+                                    <BsPen className={styles['draw-icon']} style={drawIconStyle} />
+                                </div>
+                            </div>
+                            <div className={`${styles['paletteBox']} ${!showPalette && styles['hide-component']}`}>
+                                <div className={styles['palette']} ref={paletteRef}>
+                                    <div className={`${styles['color']} ${styles['red']}`} onClick={() => changeColor('#FF4836')}></div>
+                                    <div className={`${styles['color']} ${styles['yellow']}`} onClick={() => changeColor('#FFE55A')}></div>
+                                    <div className={`${styles['color']} ${styles['green']}`} onClick={() => changeColor('#00E132')}></div>
+                                    <div className={`${styles['color']} ${styles['blue']}`} onClick={() => changeColor('#4C94FF')}></div>
+                                    <div className={`${styles['color']} ${styles['purple']}`} onClick={() => changeColor('#B14EFF')}></div>
+                                </div>
+                            </div>
                         </div>
                         <div className={styles['remove']} onClick={handleRemoveClick}>
                             <PiEraser className={styles['remove-icon']} style={removeIconStyle} />

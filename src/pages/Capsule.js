@@ -25,7 +25,7 @@ const Capsule = () => {
         const resizeCanvas = () => {
             canvas.width = canvas.parentElement.clientWidth;
             canvas.height = canvas.parentElement.clientHeight;
-            context.lineWidth = 5;
+            context.lineWidth = 8;
         };
 
         window.addEventListener('resize', resizeCanvas);

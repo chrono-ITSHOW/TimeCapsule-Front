@@ -122,7 +122,7 @@ const Capsule = () => {
                                     <div className={`${styles['color']} ${styles['green']}  ${currentColor === '#00E132' ? styles['selected-color'] : ''} `} onClick={() => changeColor('#00E132')}></div>
                                     <div className={`${styles['color']} ${styles['blue']}  ${currentColor === '#4C94FF' ? styles['selected-color'] : ''} `} onClick={() => changeColor('#4C94FF')}></div>
                                     <div className={`${styles['color']} ${styles['purple']}  ${currentColor === '#B14EFF' ? styles['selected-color'] : ''} `} onClick={() => changeColor('#B14EFF')}></div>
-                                    <div className={`${styles['color']} ${styles['black']}  ${currentColor === '#000' ? styles['selected-color'] : ''} `} onClick={() => changeColor('#000')}></div>
+                                    <div className={`${styles['color']} ${styles['black']}  ${currentColor === 'black' ? styles['selected-color'] : ''}`} onClick={() => changeColor('black')}></div>
                                 </div>
                             </div>
                         </div>

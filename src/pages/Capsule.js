@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Glass from '../commponents/Glass';
 import BackgroundImg from '../commponents/BackgroundImg';
-import styles from '../styles/Capsule.module.css'
+import styles from '../styles/Capsule.module.css';
 
 import { BsPen } from "react-icons/bs";
 import { PiEraser } from "react-icons/pi";
@@ -77,6 +77,7 @@ const Capsule = () => {
         setDrawingMode(true);
         ctx.strokeStyle = 'black';
         setCanvasStyle({ cursor: 'url("/images/draw.svg"), auto' });
+        setShowPalette(prev => !prev); 
     };
 
     const handleRemoveClick = (context) => {
@@ -84,6 +85,7 @@ const Capsule = () => {
         setIsRemoveActive(true); 
         ctx.strokeStyle = 'white';
         setCanvasStyle({ cursor: 'url("/images/remove.svg"), auto' });
+        setShowPalette(false);
     };
 
     const drawIconStyle = isDrawActive ? { fill: '#FF4836' } : {};
@@ -101,11 +103,11 @@ const Capsule = () => {
                     <div className={styles['button']}>
                         <div className={styles['draw-container']}>
                             <div className={styles['draw-box']}>
-                                <div className={styles['draw']} onClick={() => setShowPalette(prev => !prev)}>
+                                <div className={styles['draw']} onClick={handleDrawClick}>
                                     <BsPen className={styles['draw-icon']} style={drawIconStyle} />
                                 </div>
                             </div>
-                            <div className={`${styles['paletteBox']} ${showPalette && styles['hide-component']}`} onClick={handleDrawClick}>
+                            <div className={`${styles['paletteBox']} ${!showPalette && styles['hide-component']}`}>
                                 <div className={styles['palette']} ref={paletteRef}>
                                     <div className={`${styles['color']} ${styles['red']}`}></div>
                                     <div className={`${styles['color']} ${styles['yellow']}`}></div>

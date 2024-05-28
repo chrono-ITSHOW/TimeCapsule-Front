@@ -101,7 +101,7 @@
 }
 
 .selected-color {
-    background-size: 60%;
+    background-size: 35%;
     background-position: center;
     background-repeat: no-repeat;
     background-image: url('../../public/images/select.png');

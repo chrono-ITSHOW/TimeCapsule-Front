@@ -49,10 +49,13 @@
     z-index: -1;
     height: 375px;
     row-gap: 12px;
-    margin-top: -118px;
+    display: flex;
+    margin-top: -59px;
     border-radius: 30px;
     padding-bottom: 6px;
+    align-items: flex-start;
     background-color: #FFF;
+    justify-content: flex-end;
 }
 
 .hide-component {
@@ -63,9 +66,7 @@
     height: 318px;
     cursor: pointer;
     overflow: hidden;
-    border-radius: 30px;
-    margin: 59px 0 0 6px;
-    padding: 59px 0 0 0;
+    margin: 59px 6px 0 0;
     width: calc(100% - 12px);
     border-radius: 40px 40px 100px 100px;
 }

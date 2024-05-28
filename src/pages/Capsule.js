@@ -11,7 +11,8 @@ const Capsule = () => {
     // canvas 그리기
     const canvasRef = useRef(null);
     const contextRef = useRef(null);
-
+    const paletteRef = useRef();
+    
     const [ctx, setCtx] = useState();
     const [isDrawing, setIsDrawing] = useState(false);
 
@@ -34,8 +35,7 @@ const Capsule = () => {
 
         return () => {
             window.removeEventListener('resize', resizeCanvas);
-        }
-        
+        }  
 
     }, []);
 
@@ -69,6 +69,7 @@ const Capsule = () => {
     const [isRemoveActive, setIsRemoveActive] = useState(false); 
     const [drawingMode, setDrawingMode] = useState(false); 
     const [canvasStyle, setCanvasStyle] = useState({});
+    const [showPalette, setShowPalette] = useState(false);
 
     const handleDrawClick = (context) => {
         setIsDrawActive(true);
@@ -98,9 +99,21 @@ const Capsule = () => {
                 
                 <div className={styles['capsuleBox']}>
                     <div className={styles['button']}>
-
-                        <div className={styles['draw']} onClick={handleDrawClick}>
-                            <BsPen className={styles['draw-icon']} style={drawIconStyle} />
+                        <div className={styles['draw-container']}>
+                            <div className={styles['draw-box']}>
+                                <div className={styles['draw']} onClick={() => setShowPalette(prev => !prev)}>
+                                    <BsPen className={styles['draw-icon']} style={drawIconStyle} />
+                                </div>
+                            </div>
+                            <div className={`${styles['paletteBox']} ${showPalette && styles['hide-component']}`} onClick={handleDrawClick}>
+                                <div className={styles['palette']} ref={paletteRef}>
+                                    <div className={`${styles['color']} ${styles['red']}`}></div>
+                                    <div className={`${styles['color']} ${styles['yellow']}`}></div>
+                                    <div className={`${styles['color']} ${styles['green']}`}></div>
+                                    <div className={`${styles['color']} ${styles['blue']}`}></div>
+                                    <div className={`${styles['color']} ${styles['purple']}`}></div>
+                                </div>
+                            </div>
                         </div>
                         <div className={styles['remove']} onClick={handleRemoveClick}>
                             <PiEraser className={styles['remove-icon']} style={removeIconStyle} />

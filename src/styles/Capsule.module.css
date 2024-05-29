@@ -160,3 +160,10 @@
     border-radius: 40px;
     background-color: #FFF;
 }
+
+.canvas-circle {
+    width: 420px;
+    height: 399px;
+    margin: auto 0;
+    margin-left: 97px;
+}

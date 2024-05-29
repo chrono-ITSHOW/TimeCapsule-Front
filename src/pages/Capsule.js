@@ -5,6 +5,8 @@ import styles from '../styles/Capsule.module.css';
 
 import { BsPen } from "react-icons/bs";
 import { PiEraser } from "react-icons/pi";
+import { OrbitControls } from "@react-three/drei";
+import { Canvas } from '@react-three/fiber';
 
 const Capsule = () => {
     const canvasRef = useRef(null);
@@ -161,6 +163,9 @@ const Capsule = () => {
                     </div>
 
                     <div className={styles['canvas-circle']}>
+                        <Canvas style={{ boxSizing: "border-box", margin: 10, width: "100%", height: "100%", backgroundColor: "#FFF", borderRadius: "100%", boxShadow: "inset 15px -10px 30px rgba(0, 0, 0, 0.2)" }} camera={{ fov: 30, near: 1, aspect: window.innerWidth / window.innerHeight, far: 1000, position: [0, 0, 10] }}>
+                            <OrbitControls />
+                        </Canvas>
                     </div>
                 </div>
             </div>

@@ -7,13 +7,11 @@ import { BsPen } from "react-icons/bs";
 import { PiEraser } from "react-icons/pi";
 
 const Capsule = () => {
-
-    // canvas 그리기
     const canvasRef = useRef(null);
     const contextRef = useRef(null);
     const paletteRef = useRef();
-    
-    const [ctx, setCtx] = useState();
+
+    const [ctx, setCtx] = useState(null);
     const [isDrawing, setIsDrawing] = useState(false);
 
     useEffect(() => {
@@ -35,8 +33,7 @@ const Capsule = () => {
 
         return () => {
             window.removeEventListener('resize', resizeCanvas);
-        }  
-
+        };
     }, []);
 
     const startDrawing = () => {
@@ -45,18 +42,20 @@ const Capsule = () => {
 
     const finishDrawing = () => {
         setIsDrawing(false);
+        if (ctx) {
+            ctx.closePath();
+        }
     };
 
-    const drawing = ({nativeEvent}) => {
-        const {offsetX, offsetY} = nativeEvent;
+    const drawing = ({ nativeEvent }) => {
+        const { offsetX, offsetY } = nativeEvent;
 
-        if(drawingMode) {
-            if(ctx) {
-                if(!isDrawing) {
+        if (drawingMode) {
+            if (ctx) {
+                if (!isDrawing) {
                     ctx.beginPath();
                     ctx.moveTo(offsetX, offsetY);
-                }
-                else {
+                } else {
                     ctx.lineTo(offsetX, offsetY);
                     ctx.stroke();
                 }
@@ -64,39 +63,43 @@ const Capsule = () => {
         }
     };
 
-    // .draw, .remove 클릭 시 색 변경 및 .draw를 클릭했을 때만 canvas가 그려지기
-    const [isDrawActive, setIsDrawActive] = useState(false); 
-    const [isRemoveActive, setIsRemoveActive] = useState(false); 
-    const [drawingMode, setDrawingMode] = useState(false); 
+    const [isDrawActive, setIsDrawActive] = useState(false);
+    const [isRemoveActive, setIsRemoveActive] = useState(false);
+    const [drawingMode, setDrawingMode] = useState(false);
     const [canvasStyle, setCanvasStyle] = useState({});
     const [showPalette, setShowPalette] = useState(false);
     const [currentColor, setCurrentColor] = useState('black');
 
     const handleDrawClick = () => {
-        setIsDrawActive(true);
+        setIsDrawActive(!isDrawActive);
         setIsRemoveActive(false);
-        setDrawingMode(true);
+        setDrawingMode(!isDrawActive);
         setCanvasStyle({ cursor: 'url("/images/draw.svg") 0 32, auto' });
-        setShowPalette(prev => !prev); 
-        ctx.strokeStyle = currentColor;
+        setShowPalette(!isDrawActive);
+        if (ctx) {
+            ctx.strokeStyle = currentColor;
+        }
     };
 
     const handleRemoveClick = () => {
         setIsDrawActive(false);
-        setIsRemoveActive(true); 
+        setIsRemoveActive(true);
+        setDrawingMode(true);
         setCanvasStyle({ cursor: 'url("/images/remove.svg") 0 32, auto' });
         setShowPalette(false);
-        ctx.strokeStyle = 'white';
+        if (ctx) {
+            ctx.strokeStyle = 'white';
+        }
     };
 
     const changeColor = (color) => {
         setCurrentColor(color);
-        if (isDrawActive) {
+        if (isDrawActive && ctx) {
             ctx.strokeStyle = color;
         }
     };
 
-    const drawIconStyle = isDrawActive ? { fill: '#FF4836' } : {};
+    const drawIconStyle = isDrawActive && showPalette ? { fill: '#FF4836' } : {};
     const removeIconStyle = isRemoveActive ? { fill: '#FF4836' } : {};
 
     return (
@@ -136,7 +139,6 @@ const Capsule = () => {
                     </div>
 
                     <div className={styles['canvasCircle']}>
-
                     </div>
                 </div>
             </div>

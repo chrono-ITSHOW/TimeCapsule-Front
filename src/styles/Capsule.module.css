@@ -60,8 +60,7 @@
     justify-content: flex-end;
 }
 
-.palette-hide,
-.eraser-hide {
+.palette-hide {
     display: none;
 }
 
@@ -132,6 +131,10 @@
     align-items: flex-end;
     justify-content: center;
     background-color: #FFF;
+}
+
+.eraser-hide {
+    display: none;
 }
 
 .eraser {

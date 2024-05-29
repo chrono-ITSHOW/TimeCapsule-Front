@@ -69,6 +69,7 @@ const Capsule = () => {
     const [drawingMode, setDrawingMode] = useState(false);
     const [canvasStyle, setCanvasStyle] = useState({});
     const [showPalette, setShowPalette] = useState(false);
+    const [showEraser, setShowEraser] = useState(false);
     const [currentColor, setCurrentColor] = useState('black');
 
     const handleDrawClick = () => {
@@ -85,6 +86,7 @@ const Capsule = () => {
     const handleRemoveClick = () => {
         setDrawingMode(true);
         setShowPalette(false);
+        setShowEraser(!isRemoveActive);
         setIsDrawActive(false);
         setIsRemoveActive(!isRemoveActive);
         setCanvasStyle({ cursor: 'url("/images/remove.svg") 0 32, auto' });
@@ -104,7 +106,7 @@ const Capsule = () => {
     }    
 
     const drawIconStyle = isDrawActive && showPalette ? { fill: '#FF4836' } : {};
-    const removeIconStyle = isRemoveActive ? { fill: '#FF4836' } : {};
+    const removeIconStyle = isRemoveActive && showEraser ? { fill: '#FF4836' } : {};
 
     return (
         <div>
@@ -142,7 +144,7 @@ const Capsule = () => {
                                 </div>
                             </div>
 
-                            <div className={`${styles['eraser-box']} ${styles['eraser-hide']}`}>
+                            <div className={`${styles['eraser-box']} ${!showEraser && styles['eraser-hide']}`}>
                                 <div className={styles['eraser']} ref={eraserRef}>
                                     <div className={styles['clear']} onClick={clearRemove}>clear</div>
                                 </div>

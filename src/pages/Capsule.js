@@ -10,6 +10,7 @@ const Capsule = () => {
     const canvasRef = useRef(null);
     const contextRef = useRef(null);
     const paletteRef = useRef();
+    const eraserRef = useRef();
 
     const [ctx, setCtx] = useState(null);
     const [isDrawing, setIsDrawing] = useState(false);
@@ -71,22 +72,22 @@ const Capsule = () => {
     const [currentColor, setCurrentColor] = useState('black');
 
     const handleDrawClick = () => {
-        setIsDrawActive(!isDrawActive);
         setIsRemoveActive(false);
         setDrawingMode(!isDrawActive);
-        setCanvasStyle({ cursor: 'url("/images/draw.svg") 0 32, auto' });
         setShowPalette(!isDrawActive);
+        setIsDrawActive(!isDrawActive);
+        setCanvasStyle({ cursor: 'url("/images/draw.svg") 0 32, auto' });
         if (ctx) {
             ctx.strokeStyle = currentColor;
         }
     };
 
     const handleRemoveClick = () => {
-        setIsDrawActive(false);
-        setIsRemoveActive(true);
         setDrawingMode(true);
-        setCanvasStyle({ cursor: 'url("/images/remove.svg") 0 32, auto' });
         setShowPalette(false);
+        setIsDrawActive(false);
+        setIsRemoveActive(!isRemoveActive);
+        setCanvasStyle({ cursor: 'url("/images/remove.svg") 0 32, auto' });
         if (ctx) {
             ctx.strokeStyle = 'white';
         }
@@ -99,18 +100,21 @@ const Capsule = () => {
         }
     };
 
+    const clearRemove = () => {
+    }    
+
     const drawIconStyle = isDrawActive && showPalette ? { fill: '#FF4836' } : {};
     const removeIconStyle = isRemoveActive ? { fill: '#FF4836' } : {};
 
     return (
         <div>
-            <div className={styles['capsuleContainer']}>
+            <div className={styles['capsule-container']}>
                 <>
-                    <p className={styles['title']}>나만의 타입캡슐을 꾸며주세요!</p>
+                    <p className={styles['title']}>나만의 타임캡슐을 꾸며주세요!</p>
                     <p className={styles['sub-title']}>여기서 만든 타임캡슐은 나의 편지와 메인 화면에 보여져요 :&#41;</p>
                 </>
                 
-                <div className={styles['capsuleBox']}>
+                <div className={styles['capsule-box']}>
                     <div className={styles['button']}>
                         <div className={styles['draw-container']}>
                             <div className={styles['draw-box']}>
@@ -118,7 +122,8 @@ const Capsule = () => {
                                     <BsPen className={styles['draw-icon']} style={drawIconStyle} />
                                 </div>
                             </div>
-                            <div className={`${styles['paletteBox']} ${!showPalette && styles['hide-component']}`}>
+
+                            <div className={`${styles['palette-box']} ${!showPalette && styles['palette-hide']}`}>
                                 <div className={styles['palette']} ref={paletteRef}>
                                     <div className={`${styles['color']} ${styles['red']} ${currentColor === '#FF4836' ? styles['selected-color'] : ''} `} onClick={() => changeColor('#FF4836')}></div>
                                     <div className={`${styles['color']} ${styles['yellow']}  ${currentColor === '#FFE55A' ? styles['selected-color'] : ''} `} onClick={() => changeColor('#FFE55A')}></div>
@@ -129,16 +134,27 @@ const Capsule = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className={styles['remove']} onClick={handleRemoveClick}>
-                            <PiEraser className={styles['remove-icon']} style={removeIconStyle} />
+
+                        <div className={styles['remove-container']}>
+                            <div className={styles['remove-box']}>
+                                <div className={styles['remove']} onClick={handleRemoveClick}>
+                                    <PiEraser className={styles['remove-icon']} style={removeIconStyle} />
+                                </div>
+                            </div>
+
+                            <div className={`${styles['eraser-box']} ${styles['eraser-hide']}`}>
+                                <div className={styles['eraser']} ref={eraserRef}>
+                                    <div className={styles['clear']} onClick={clearRemove}>clear</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <div className={styles['canvasRectangle']} style={canvasStyle}>
+                    <div className={styles['canvas-rectangle']} style={canvasStyle}>
                         <canvas ref={canvasRef} onMouseDown={startDrawing} onMouseUp={finishDrawing} onMouseMove={drawing} onMouseLeave={finishDrawing} />
                     </div>
 
-                    <div className={styles['canvasCircle']}>
+                    <div className={styles['canvas-circle']}>
                     </div>
                 </div>
             </div>

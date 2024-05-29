@@ -73,10 +73,11 @@ const Capsule = () => {
     const [currentColor, setCurrentColor] = useState('black');
 
     const handleDrawClick = () => {
-        setIsRemoveActive(false);
         setDrawingMode(!isDrawActive);
         setShowPalette(!isDrawActive);
+        setShowEraser(false);
         setIsDrawActive(!isDrawActive);
+        setIsRemoveActive(false);
         setCanvasStyle({ cursor: 'url("/images/draw.svg") 0 32, auto' });
         if (ctx) {
             ctx.strokeStyle = currentColor;

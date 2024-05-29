@@ -163,7 +163,7 @@ const Capsule = () => {
                     </div>
 
                     <div className={styles['canvas-circle']}>
-                        <Canvas style={{ boxSizing: "border-box", margin: 10, width: "100%", height: "100%", backgroundColor: "#FFF", borderRadius: "100%", boxShadow: "inset 15px -10px 30px rgba(0, 0, 0, 0.2)" }} camera={{ fov: 30, near: 1, aspect: window.innerWidth / window.innerHeight, far: 1000, position: [0, 0, 10] }}>
+                        <Canvas style={{ boxSizing: "border-box", margin: 10, width: "100%", height: "100%", backgroundColor: "#FFF", borderRadius: "100%", boxShadow: "inset 15px -20px 40px rgba(0, 0, 0, 0.2)" }} camera={{ fov: 30, near: 1, aspect: window.innerWidth / window.innerHeight, far: 1000, position: [0, 0, 10] }}>
                             <OrbitControls />
                         </Canvas>
                     </div>

@@ -1,6 +1,5 @@
 .glassContainer{
     position: absolute;
-    height: 100vh;
     width: 100%;
     display: flex;
     align-items: center;
@@ -8,19 +7,26 @@
     z-index: -10;
     display: flex;
     column-gap: 69px;
+    bottom: 60px;
+    row-gap: 2vw;
+}
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.title{
+    width: 37vw;
+    padding-top: 1vw;
 }
 .glassFull{
     width: 100vw;
-    height: 722px;
+    height: 652px;
     background-color: #9696960f;
     backdrop-filter: blur(32px);
     box-shadow: 0 0 42px;
     color: #00000020;
     border: solid 1px #ffffff96;
-}
-.btnStyles{
-    width: 65px;
-    height: 65px;
 }
 .glass{
     width: 1414px;

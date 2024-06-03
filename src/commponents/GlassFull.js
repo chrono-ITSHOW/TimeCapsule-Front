@@ -4,7 +4,8 @@ import styles from '../styles/Glass.module.css'
 function BackgroundImg() {
 
     return (
-        <div className={styles['glassContainer']}>
+        <div className={styles['glassContainer']} style={{flexDirection:"column", bottom:"110px"}}>
+            <img src='/images/timecapsule.png' style={{width:"50vw"}}/>
             <div className={styles['glassFull']}></div>
         </div>
     );

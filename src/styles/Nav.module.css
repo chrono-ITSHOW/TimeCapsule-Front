@@ -1,0 +1,16 @@
+.nav-contianer{
+    display: flex;
+    width: 88vw;
+    align-items: center;
+    justify-content: space-between;
+    margin: auto;
+    position: relative;
+    z-index: 99;
+    height: 82vh;
+}
+
+.btnStyles{
+    width: 65px;
+    height: 65px;
+    cursor: pointer;
+}

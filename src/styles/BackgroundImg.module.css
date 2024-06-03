@@ -1,106 +1,21 @@
 .backgroundContainer{
-    position: relative;
     overflow: hidden;
-    width: 1920px;
-    height: 1080px;
     z-index: -99;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-.ball1 {
-    width: 2767px;
-    position: absolute;
-    left: 75px;
-    top: -600px;
-    animation: floatAnimation1 2s infinite alternate ease-in-out;
+video{
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    z-index: -99;
+    top: 0;
 }
-
-.ball2{
-    width: 1633px;
-    position: absolute;
-    left: -485px;
-    top: 555px;
-    animation: floatAnimation2 2s infinite alternate ease-in-out;
-}
-.ball3{
-    width: 480px;
-    position: absolute;
-    left: -60px;
-    top: 356px;
-    animation: floatAnimation3 1.5s infinite alternate ease-in-out;
-}
-.ball4{
-    width: 491px;
-    position: absolute;
-    left: 1491px;
-    top: 560px;
-    animation: floatAnimation4 2.5s infinite alternate ease-in-out;
-}
-.ring1{
-    width: 1080px;
-    position: absolute;
-    left: 119px;
-    top: -129px;
-    animation: floatAnimation5 1.5s infinite alternate ease-in-out;
-}
-.ring2{
-    width: 1080px;
-    position: absolute;
-    left: 714px;
-    top: 584px;
-    rotate: 103deg;
-    transform: scale(-1, -1);
-    animation: floatAnimation6 2.5s infinite alternate ease-in-out;
-}
-@keyframes floatAnimation1 {
-    0% {
-        transform: translateY(0);
-    }
-    100% {
-        transform: translateY(-22px);
-    }
-}
-
-@keyframes floatAnimation2 {
-    0% {
-        transform: translateY(0);
-    }
-    100% {
-        transform: translateY(-19px);
-    }
-}
-
-@keyframes floatAnimation3 {
-    0% {
-        transform: translateY(0);
-    }
-    100% {
-        transform: translateY(-14px);
-    }
-}
-
-@keyframes floatAnimation4 {
-    0% {
-        transform: translateY(0);
-    }
-    100% {
-        transform: translateY(-10px);
-    }
-}
-
-@keyframes floatAnimation5 {
-    0% {
-        transform: translateY(0);
-    }
-    100% {
-        transform: translateY(-8px);
-    }
-}
-
-@keyframes floatAnimation6 {
-    0% {
-        transform: translateY(0);
-    }
-    100% {
-        transform: translateY(-10px);
-        transform: translateX(-10px);
-    }
+.imgstyle{
+    width: 55vw;
+    position: relative;
+    top: -126px;
+    /* margin: 0 auto; */
+    margin-left: 48px;
 }

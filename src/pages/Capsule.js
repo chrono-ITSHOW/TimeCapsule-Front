@@ -7,6 +7,17 @@ import { OrbitControls } from "@react-three/drei";
 import { Canvas } from '@react-three/fiber';
 
 const Capsule = () => {
+    const imageUrls = [
+        'https://cdn.imweb.me/thumbnail/20210304/035d01c442580.png',
+        'https://health.chosun.com/site/data/img_dir/2023/07/17/2023071701753_0.jpg',
+        'https://m.ministorypet.com/web/product/big/202208/ee2eeb094842d1f42bcb689ede6d6638.jpg',
+        'https://cdn.womaneconomy.co.kr/news/photo/202310/219358_427481_4850.jpg',
+        'https://together-mud.kakaocdn.net/dn/ddUiy9/btsdGABygpb/MsARp4M5vZdcumFmyHKoN1/c360.jpg'
+    ];
+
+    const randomIndex = Math.floor(Math.random() * imageUrls.length);
+    const randomImageUrl = imageUrls[randomIndex];
+
     return (
         <div>
             <div className={styles['capsule-container']}>
@@ -24,7 +35,6 @@ const Capsule = () => {
 
                     <div className={styles['capsule-img']}>
                         <div className={styles['qr']}>
-
                         </div>
                         <div className={styles['img-button']}>
                             <p>랜덤 이미지</p>

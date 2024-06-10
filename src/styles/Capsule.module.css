@@ -20,11 +20,38 @@
 
 .capsule-box {
     display: flex;
+    column-gap: 76px;
     margin-top: 101px;
 }
 
-.canvas-circle {
-    width: 420px;
-    height: 399px;
+.capsule-circle {
+    width: 445px;
+    height: 429px;
     margin: auto 0;
+}
+
+.capsule-img {
+    row-gap: 36px;
+    display: flex;
+    margin-top: 49px;
+    flex-direction: column;
+}
+
+.qr {
+    width: 258px;
+    height: 258px;
+}
+
+.img-button {
+    width: 258px;
+    height: 62px;
+    display: flex;
+    font-size: 24px;
+    align-items: center;
+    border-radius: 15px;
+    font-weight: lighter;
+    justify-content: center;
+    font-family: 'Pretendard';
+    border: 2px solid rgba(243, 243, 243, 0.23);
+    background-color: rgba(150, 150, 150, 0.23);
 }

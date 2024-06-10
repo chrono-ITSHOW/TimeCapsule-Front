@@ -16,10 +16,19 @@ const Capsule = () => {
                 </>
                 
                 <div className={styles['capsule-box']}>
-                    <div className={styles['canvas-circle']}>
+                    <div className={styles['capsule-circle']}>
                         <Canvas style={{ boxSizing: "border-box", width: "100%", height: "100%", backgroundColor: "#FFF", borderRadius: "100%", boxShadow: "inset 15px -20px 40px rgba(0, 0, 0, 0.2)" }} camera={{ fov: 30, near: 1, aspect: window.innerWidth / window.innerHeight, far: 1000, position: [0, 0, 10] }}>
                             <OrbitControls />
                         </Canvas>
+                    </div>
+
+                    <div className={styles['capsule-img']}>
+                        <div className={styles['qr']}>
+
+                        </div>
+                        <div className={styles['img-button']}>
+                            <p>랜덤 이미지</p>
+                        </div>
                     </div>
                 </div>
             </div>

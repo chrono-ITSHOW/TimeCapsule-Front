@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from '../styles/Qr.module.css'
-import { Icon } from '@iconify/react';
 
 function Qr() {
 

@@ -5,6 +5,7 @@ import Start from './pages/Start';
 import Send from './pages/Send'
 import Write from './pages/Write'
 import Capsule from './pages/Capsule';
+import Qr from './pages/Qr';
 
 function App() {
     return (
@@ -14,6 +15,7 @@ function App() {
                 <Route path="/send" element={<Send />} />
                 <Route path="/write" element={<Write />} />
                 <Route path='/capsule' element={<Capsule /> } />
+                <Route path='/qr' element={<Qr />} />
             </Routes>
         </Router>
     )

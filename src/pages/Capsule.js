@@ -10,13 +10,13 @@ const Capsule = () => {
         <div>
             <div className={styles['capsule-container']}>
                 <>
-                    <p className={styles['title']}>나만의 타임캡슐을 꾸며주세요!</p>
-                    <p className={styles['sub-title']}>여기서 만든 타임캡슐은 나의 편지와 메인 화면에 보여져요 :&#41;</p>
+                    <p className={styles['title']}>추억이 담긴 사진으로 당신의 타임캡슐을 꾸며보세요!</p>
+                    <p className={styles['sub-title']}>옆에 있는 QR을 찍어 내 갤러리에 있는 사진을 업로드 해보세요!</p>
                 </>
                 
                 <div className={styles['capsule-box']}>
                     <div className={styles['canvas-circle']}>
-                        <Canvas style={{ boxSizing: "border-box", margin: 10, width: "100%", height: "100%", backgroundColor: "#FFF", borderRadius: "100%", boxShadow: "inset 15px -20px 40px rgba(0, 0, 0, 0.2)" }} camera={{ fov: 30, near: 1, aspect: window.innerWidth / window.innerHeight, far: 1000, position: [0, 0, 10] }}>
+                        <Canvas style={{ boxSizing: "border-box", width: "100%", height: "100%", backgroundColor: "#FFF", borderRadius: "100%", boxShadow: "inset 15px -20px 40px rgba(0, 0, 0, 0.2)" }} camera={{ fov: 30, near: 1, aspect: window.innerWidth / window.innerHeight, far: 1000, position: [0, 0, 10] }}>
                             <OrbitControls />
                         </Canvas>
                     </div>

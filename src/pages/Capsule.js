@@ -1,5 +1,6 @@
 import Glass from '../commponents/Glass';
 import BackgroundImg from '../commponents/BackgroundImg';
+import Nav from '../commponents/Nav';
 import styles from '../styles/Capsule.module.css';
 
 import { OrbitControls } from "@react-three/drei";
@@ -24,6 +25,7 @@ const Capsule = () => {
             </div>
 
             <Glass />
+            <Nav />
             <BackgroundImg />
         </div>
     );

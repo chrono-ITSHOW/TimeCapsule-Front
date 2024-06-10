@@ -1,119 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
 import Glass from '../commponents/Glass';
 import BackgroundImg from '../commponents/BackgroundImg';
 import styles from '../styles/Capsule.module.css';
 
-import { BsPen } from "react-icons/bs";
-import { PiEraser } from "react-icons/pi";
 import { OrbitControls } from "@react-three/drei";
 import { Canvas } from '@react-three/fiber';
 
 const Capsule = () => {
-    const canvasRef = useRef(null);
-    const contextRef = useRef(null);
-    const paletteRef = useRef();
-    const eraserRef = useRef();
-
-    const [ctx, setCtx] = useState(null);
-    const [isDrawing, setIsDrawing] = useState(false);
-
-    useEffect(() => {
-        const canvas = canvasRef.current;
-        const context = canvas.getContext('2d');
-        contextRef.current = context;
-        context.strokeStyle = 'black';
-
-        const resizeCanvas = () => {
-            canvas.width = canvas.parentElement.clientWidth;
-            canvas.height = canvas.parentElement.clientHeight;
-            context.lineWidth = 8;
-        };
-
-        window.addEventListener('resize', resizeCanvas);
-
-        setCtx(context);
-        resizeCanvas();
-
-        return () => {
-            window.removeEventListener('resize', resizeCanvas);
-        };
-    }, []);
-
-    const startDrawing = () => {
-        setIsDrawing(true);
-    };
-
-    const finishDrawing = () => {
-        setIsDrawing(false);
-        if (ctx) {
-            ctx.closePath();
-        }
-    };
-
-    const drawing = ({ nativeEvent }) => {
-        const { offsetX, offsetY } = nativeEvent;
-
-        if (drawingMode) {
-            if (ctx) {
-                if (!isDrawing) {
-                    ctx.beginPath();
-                    ctx.moveTo(offsetX, offsetY);
-                } else {
-                    ctx.lineTo(offsetX, offsetY);
-                    ctx.stroke();
-                }
-            }
-        }
-    };
-
-    const [isDrawActive, setIsDrawActive] = useState(false);
-    const [isRemoveActive, setIsRemoveActive] = useState(false);
-    const [drawingMode, setDrawingMode] = useState(false);
-    const [canvasStyle, setCanvasStyle] = useState({});
-    const [showPalette, setShowPalette] = useState(false);
-    const [showEraser, setShowEraser] = useState(false);
-    const [currentColor, setCurrentColor] = useState('black');
-
-    const handleDrawClick = () => {
-        setDrawingMode(!isDrawActive);
-        setShowPalette(!isDrawActive);
-        setShowEraser(false);
-        setIsDrawActive(!isDrawActive);
-        setIsRemoveActive(false);
-        setCanvasStyle({ cursor: 'url("/images/draw.svg") 0 32, auto' });
-        if (ctx) {
-            ctx.strokeStyle = currentColor;
-        }
-    };
-
-    const handleRemoveClick = () => {
-        setDrawingMode(true);
-        setShowPalette(false);
-        setShowEraser(!isRemoveActive);
-        setIsDrawActive(false);
-        setIsRemoveActive(!isRemoveActive);
-        setCanvasStyle({ cursor: 'url("/images/remove.svg") 0 32, auto' });
-        if (ctx) {
-            ctx.strokeStyle = 'white';
-        }
-    };
-
-    const changeColor = (color) => {
-        setCurrentColor(color);
-        if (isDrawActive && ctx) {
-            ctx.strokeStyle = color;
-        }
-    };
-
-    const clearRemove = () => {
-        if (ctx) {
-            ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
-        }
-    }    
-
-    const drawIconStyle = isDrawActive && showPalette ? { fill: '#FF4836' } : {};
-    const removeIconStyle = isRemoveActive && showEraser ? { fill: '#FF4836' } : {};
-
     return (
         <div>
             <div className={styles['capsule-container']}>
@@ -123,45 +15,6 @@ const Capsule = () => {
                 </>
                 
                 <div className={styles['capsule-box']}>
-                    <div className={styles['button']}>
-                        <div className={styles['draw-container']}>
-                            <div className={styles['draw-box']}>
-                                <div className={styles['draw']} onClick={handleDrawClick}>
-                                    <BsPen className={styles['draw-icon']} style={drawIconStyle} />
-                                </div>
-                            </div>
-
-                            <div className={`${styles['palette-box']} ${!showPalette && styles['palette-hide']}`}>
-                                <div className={styles['palette']} ref={paletteRef}>
-                                    <div className={`${styles['color']} ${styles['red']} ${currentColor === '#FF4836' ? styles['selected-color'] : ''} `} onClick={() => changeColor('#FF4836')}></div>
-                                    <div className={`${styles['color']} ${styles['yellow']}  ${currentColor === '#FFE55A' ? styles['selected-color'] : ''} `} onClick={() => changeColor('#FFE55A')}></div>
-                                    <div className={`${styles['color']} ${styles['green']}  ${currentColor === '#00E132' ? styles['selected-color'] : ''} `} onClick={() => changeColor('#00E132')}></div>
-                                    <div className={`${styles['color']} ${styles['blue']}  ${currentColor === '#4C94FF' ? styles['selected-color'] : ''} `} onClick={() => changeColor('#4C94FF')}></div>
-                                    <div className={`${styles['color']} ${styles['purple']}  ${currentColor === '#B14EFF' ? styles['selected-color'] : ''} `} onClick={() => changeColor('#B14EFF')}></div>
-                                    <div className={`${styles['color']} ${styles['black']}  ${currentColor === 'black' ? styles['selected-color'] : ''}`} onClick={() => changeColor('black')}></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className={styles['remove-container']}>
-                            <div className={styles['remove-box']}>
-                                <div className={styles['remove']} onClick={handleRemoveClick}>
-                                    <PiEraser className={styles['remove-icon']} style={removeIconStyle} />
-                                </div>
-                            </div>
-
-                            <div className={`${styles['eraser-box']} ${!showEraser && styles['eraser-hide']}`}>
-                                <div className={styles['eraser']} ref={eraserRef}>
-                                    <div className={styles['clear']} onClick={clearRemove}>clear</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className={styles['canvas-rectangle']} style={canvasStyle}>
-                        <canvas ref={canvasRef} onMouseDown={startDrawing} onMouseUp={finishDrawing} onMouseMove={drawing} onMouseLeave={finishDrawing} />
-                    </div>
-
                     <div className={styles['canvas-circle']}>
                         <Canvas style={{ boxSizing: "border-box", margin: 10, width: "100%", height: "100%", backgroundColor: "#FFF", borderRadius: "100%", boxShadow: "inset 15px -20px 40px rgba(0, 0, 0, 0.2)" }} camera={{ fov: 30, near: 1, aspect: window.innerWidth / window.innerHeight, far: 1000, position: [0, 0, 10] }}>
                             <OrbitControls />

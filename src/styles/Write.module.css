@@ -8,10 +8,9 @@
     position: absolute;
     justify-content: center;
     align-items: center;
-    width: 100%;
     column-gap: 99px;
     margin-top: 48px;
-    bottom: 115px;
+    bottom: 122px;
 }
 .inputStyle{
     width: 625px;

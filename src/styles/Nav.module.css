@@ -1,11 +1,11 @@
 .nav-contianer{
     display: flex;
-    width: 88vw;
+    width: 94vw;
     align-items: center;
     justify-content: space-between;
     margin: auto;
     position: relative;
-    z-index: 99;
+    z-index: -20;
     height: 82vh;
 }
 

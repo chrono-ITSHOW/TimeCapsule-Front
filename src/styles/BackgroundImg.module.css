@@ -11,6 +11,7 @@ video{
     height: 100vh;
     z-index: -99;
     top: 0;
+    object-fit: cover;
 }
 .imgstyle{
     width: 55vw;

@@ -69,7 +69,7 @@ const Write = () => {
 
   return (
     <div>
-      <div>
+      <div style={{display:"flex", justifyContent:"center"}}>
       <div className={styles['writeContainer']}>
         <div className={styles['inputContainer']}>
           <Input type="email" text='나의 편지를 보낼 이메일을 작성해주세요!' />

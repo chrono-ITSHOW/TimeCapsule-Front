@@ -2,15 +2,32 @@ import React from 'react';
 import { Icon } from '@iconify/react';
 import { useLocation } from 'react-router-dom';
 import styles from '../styles/Glass.module.css';
+import NavStyles from '../styles/Nav.module.css';
 
-const Glass = () => {
+const Glass = ({ onPopupOpen }) => {
   const location = useLocation();
-  
+  const currentPage = location.pathname;
+
+  const handleImageClick = () => {
+    onPopupOpen();
+  };
+
   return (
     <div className={styles['container']}>
       <img src='/images/timecapsule.png' className={styles['title']} alt="타임캡슐" />
       <div className={styles['glassContainer']}>
+        <Icon icon="icon-park-solid:left-c" className={NavStyles['btnStyles']} />
         <div className={styles['glass']}></div>
+        {currentPage === '/write' ? (
+          <img
+            src='/images/send.png'
+            className={NavStyles['btnStyles']}
+            alt='보내기'
+            onClick={handleImageClick}
+          />
+        ) : (
+        <Icon icon="icon-park-solid:right-c" className={NavStyles['btnStyles']} />
+        )}
       </div>
     </div>
   );

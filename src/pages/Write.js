@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Glass from '../commponents/Glass';
-import BackgroundImg from '../commponents/BackgroundImg';
-import Input from '../commponents/input';
+import Glass from '../components/Glass';
+import BackgroundImg from '../components/BackgroundImg';
+import Input from '../components/input';
 import styles from '../styles/Write.module.css';
 import { Icon } from '@iconify/react';
-import Nav from '../commponents/Nav';
+import Nav from '../components/Nav';
 
 const Write = () => {
   const [inputText, setInputText] = useState('');
@@ -86,7 +86,7 @@ const Write = () => {
               className={styles["check1"]} 
               onChange={handleCheckboxChange} 
             />
-            <label htmlFor="check1" style={{fontSize:"24px"}}>2025년의 너에게</label>
+            <label htmlFor="check1" style={{fontSize:"20px"}}>2025년의 너에게</label>
           </div>
         </div>
         <div className={styles['letterContainer']}>
@@ -94,15 +94,20 @@ const Write = () => {
             <div style={{width:"54px", height:"54px", marginBottom:"26px"}}></div>
             {formattedDate}
           </div>
-          <div>{generateStyledText()}</div>
+          <div style={{height:"450px", overflow:"hidden"}}
+            >{generateStyledText()}
+          </div>
           {isChecked && <p className={styles['checkText']}>2025년의 너에게</p>}
         </div>
         {isHeightExceeded && <div className={styles['ErrorStyle']}>글자 수가 초과했습니다</div>}
       </div>
       </div>
-      
-      <Glass/>
-      <Nav  onPopupOpen={handlePopupOpen} />
+      <div>
+
+      </div>
+        <Glass onPopupOpen={handlePopupOpen}/>
+
+      {/* <Nav  onPopupOpen={handlePopupOpen} /> */}
       <BackgroundImg />
       {isPopupOpen && (
         <div className={styles['popupBackground']}>

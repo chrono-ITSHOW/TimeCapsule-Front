@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Icon } from '@iconify/react';
-import BackgroundImg from '../commponents/BackgroundImg';
+import BackgroundImg from '../components/BackgroundImg';
 import styles from '../styles/Loading.module.css'
 import MainStyle from '../styles/Style.module.css'
-import GlassFull from '../commponents/GlassFull';
+import GlassFull from '../components/GlassFull';
 
 function Send() {
     const navigate = useNavigate();

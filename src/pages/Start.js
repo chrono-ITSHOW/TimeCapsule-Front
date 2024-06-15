@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Icon } from '@iconify/react';
-import BackgroundImg from '../commponents/BackgroundImg';
+import BackgroundImg from '../components/BackgroundImg';
 import styles from '../styles/Start.module.css'
-import GlassFull from '../commponents/GlassFull'
+import GlassFull from '../components/GlassFull'
 
 function Start() {
     const navigate = useNavigate();

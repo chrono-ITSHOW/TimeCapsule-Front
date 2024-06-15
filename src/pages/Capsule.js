@@ -1,9 +1,11 @@
+import React, { useState, useTransition } from 'react';
 import Glass from '../components/Glass';
 import BackgroundImg from '../components/BackgroundImg';
 import styles from '../styles/Capsule.module.css';
 
 import { OrbitControls } from "@react-three/drei";
-import { Canvas } from '@react-three/fiber';
+import { Canvas, useLoader } from '@react-three/fiber';
+import { TextureLoader } from 'three';
 
 const Capsule = () => {
 
@@ -18,6 +20,17 @@ const Capsule = () => {
         'https://images.pexels.com/photos/3608263/pexels-photo-3608263.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
     ];
 
+    const [currentImage, setCurrentImage] = useState(images[0]);
+    const texture = useLoader(TextureLoader, currentImage);
+    const [isPending, startTransition] = useTransition();
+
+    const changeImage = () => {
+        startTransition(() => {
+            const randomIndex = Math.floor(Math.random() * images.length);
+            setCurrentImage(images[randomIndex]);
+        });
+    };
+
     return (
         <div>
             <div className={styles['capsule-container']}>
@@ -30,12 +43,16 @@ const Capsule = () => {
                     <div className={styles['capsule-circle']}>
                         <Canvas style={{ boxSizing: "border-box", width: "100%", height: "100%", backgroundColor: "#FFF", borderRadius: "100%", boxShadow: "inset 15px -20px 40px rgba(0, 0, 0, 0.2)" }} camera={{ fov: 30, near: 1, aspect: window.innerWidth / window.innerHeight, far: 1000, position: [0, 0, 10] }}>
                             <OrbitControls />
+                            <mesh>
+                                <sphereGeometry args={[5, 32, 32]} />
+                                <meshBasicMaterial map={texture} />
+                            </mesh>
                         </Canvas>
                     </div>
 
                     <div className={styles['capsule-img']}>
                         <div className={styles['qr']}></div>
-                        <div className={styles['img-button']}>
+                        <div className={styles['img-button']} onClick={changeImage} >
                             <p>랜덤 이미지</p>
                         </div>
                     </div>

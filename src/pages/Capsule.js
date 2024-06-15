@@ -20,18 +20,24 @@ const Capsule = () => {
         'https://images.pexels.com/photos/3608263/pexels-photo-3608263.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
     ];
 
-    const [currentImage, setCurrentImage] = useState(images[0]);
+    const [currentImage, setCurrentImage] = useState(null);
+    const [texture, setTexture] = useState(null);
     const [isPending, startTransition] = useTransition();
 
-    const texture = useLoader(TextureLoader, currentImage);
-    texture.wrapS = RepeatWrapping;
-    texture.wrapT = RepeatWrapping;
-    texture.repeat.set(3, 3);
+    const updateTexture = (image) => {
+        const newTexture = new TextureLoader().load(image);
+        newTexture.wrapS = RepeatWrapping;
+        newTexture.wrapT = RepeatWrapping;
+        newTexture.repeat.set(3, 3);
+        setTexture(newTexture);
+    };
 
     const changeImage = () => {
         startTransition(() => {
             const randomIndex = Math.floor(Math.random() * images.length);
-            setCurrentImage(images[randomIndex]);
+            const newImage = images[randomIndex];
+            setCurrentImage(newImage);
+            updateTexture(newImage);
         });
     };
 
@@ -49,14 +55,14 @@ const Capsule = () => {
                             <OrbitControls />
                             <mesh>
                                 <sphereGeometry args={[5, 32, 32]} />
-                                <meshBasicMaterial map={texture} />
+                                {texture && <meshBasicMaterial map={texture} />} 
                             </mesh>
                         </Canvas>
                     </div>
 
-                    <div className={styles['capsule-img']}>
+                    <div className={styles['capsule-img']} onClick={changeImage}> 
                         <div className={styles['qr']}></div>
-                        <div className={styles['img-button']} onClick={changeImage} >
+                        <div className={styles['img-button']} >
                             <p>랜덤 이미지</p>
                         </div>
                     </div>

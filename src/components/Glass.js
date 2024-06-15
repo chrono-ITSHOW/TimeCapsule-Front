@@ -12,11 +12,17 @@ const Glass = ({ onPopupOpen }) => {
     onPopupOpen();
   };
 
+
+  const handleGoBack = () => {
+    window.history.back();
+};
+
+
   return (
     <div className={styles['container']}>
       <img src='/images/timecapsule.png' className={styles['title']} alt="타임캡슐" />
       <div className={styles['glassContainer']}>
-        <Icon icon="icon-park-solid:left-c" className={NavStyles['btnStyles']} />
+        <Icon icon="icon-park-solid:left-c" className={NavStyles['btnStyles']} onClick={handleGoBack} />
         <div className={styles['glass']}></div>
         {currentPage === '/write' ? (
           <img

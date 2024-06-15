@@ -4,8 +4,8 @@ import Glass from '../components/Glass';
 import BackgroundImg from '../components/BackgroundImg';
 import Input from '../components/input';
 import styles from '../styles/Write.module.css';
+import popupStyles from '../styles/Popup.module.css';
 import { Icon } from '@iconify/react';
-import Nav from '../components/Nav';
 
 const Write = () => {
   const [inputText, setInputText] = useState('');
@@ -107,15 +107,14 @@ const Write = () => {
       </div>
         <Glass onPopupOpen={handlePopupOpen}/>
 
-      {/* <Nav  onPopupOpen={handlePopupOpen} /> */}
       <BackgroundImg />
       {isPopupOpen && (
-        <div className={styles['popupBackground']}>
-          <div className={styles['popupStyle']}>
-            <Icon icon="solar:letter-linear" className={styles['iconStyle']} />
+        <div className={popupStyles['popupBackground']}>
+          <div className={popupStyles['popupStyle']}>
+            <Icon icon="solar:letter-linear" className={popupStyles['iconStyle']} />
             <p style={{fontSize:"24px", color:"#000", textShadow:"none"}}>편지를 전송할까요?</p>
             <p style={{fontSize:"16px", color:"#CDCDCD", textShadow:"none"}}>확인을 누르시면 이전으로 돌아갈 수 없어요</p>
-            <button className={styles['btnStyle']} onClick={handleSend}>전송하기</button>
+            <button className={popupStyles['btnStyle']} onClick={handleSend}>전송하기</button>
           </div>
           <p style={{fontSize:"20px"}} onClick={handlePopupClose}>이어서 작성하기</p>
         </div>

@@ -5,7 +5,7 @@ import styles from '../styles/Capsule.module.css';
 
 import { OrbitControls } from "@react-three/drei";
 import { Canvas, useLoader } from '@react-three/fiber';
-import { TextureLoader } from 'three';
+import { RepeatWrapping, TextureLoader } from 'three';
 
 const Capsule = () => {
 
@@ -21,8 +21,12 @@ const Capsule = () => {
     ];
 
     const [currentImage, setCurrentImage] = useState(images[0]);
-    const texture = useLoader(TextureLoader, currentImage);
     const [isPending, startTransition] = useTransition();
+
+    const texture = useLoader(TextureLoader, currentImage);
+    texture.wrapS = RepeatWrapping;
+    texture.wrapT = RepeatWrapping;
+    texture.repeat.set(3, 3);
 
     const changeImage = () => {
         startTransition(() => {

@@ -1,13 +1,13 @@
 .capsule-container {
+    left: 27%;
+    z-index: 9;
     height: 100%;
     display: flex;
+    margin-top: 50px;
     position: absolute;
     align-items: center;
     flex-direction: column;
     justify-content: center;
-    z-index: 9;
-    left: 27%;
-    margin-top: 50px;
 }
 
 .title {
@@ -40,6 +40,7 @@
 }
 
 .qr {
+    opacity: 0.7;
     width: 258px;
     height: 258px;
     background-size: cover;
@@ -51,6 +52,7 @@
     width: 258px;
     height: 62px;
     display: flex;
+    cursor: pointer;
     font-size: 24px;
     align-items: center;
     border-radius: 15px;

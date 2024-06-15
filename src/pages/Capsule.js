@@ -35,8 +35,7 @@ const Capsule = () => {
                     </div>
 
                     <div className={styles['capsule-img']}>
-                        <div className={styles['qr']}>
-                        </div>
+                        <div className={styles['qr']}></div>
                         <div className={styles['img-button']}>
                             <p>랜덤 이미지</p>
                         </div>

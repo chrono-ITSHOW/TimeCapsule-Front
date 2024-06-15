@@ -1,6 +1,6 @@
-import Glass from '../commponents/Glass';
-import BackgroundImg from '../commponents/BackgroundImg';
-import Nav from '../commponents/Nav';
+import Glass from '../components/Glass';
+import BackgroundImg from '../components/BackgroundImg';
+import Nav from '../components/Nav';
 import styles from '../styles/Capsule.module.css';
 
 import { OrbitControls } from "@react-three/drei";

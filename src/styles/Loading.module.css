@@ -5,21 +5,23 @@
   row-gap: 40px;
   align-items: center;
   justify-content: center;
-  bottom: 18vw;
+  bottom: 18.5vw;
+  margin-left: 2vw
 }
 .loading {
   align-items: center;
   display: flex;
   justify-content: center;
+  margin-bottom: 2vw;
 }
 
 .loading__dot {
   animation: dot ease-in-out 1s infinite;
   background-color: rgb(255, 255, 255);
   display: inline-block;
-  height: 13px;
+  height: 12px;
   margin: 10px;
-  width: 13px;
+  width: 12px;
   border-radius: 100%;
 }
 

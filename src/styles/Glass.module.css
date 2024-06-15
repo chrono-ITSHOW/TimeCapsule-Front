@@ -1,13 +1,11 @@
 .glassContainer{
     position: absolute;
-    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: -10;
     display: flex;
     column-gap: 69px;
-    bottom: 60px;
+    bottom: 75px;
     row-gap: 2vw;
 }
 .container{
@@ -17,7 +15,7 @@
 }
 .title{
     width: 37vw;
-    padding-top: 1vw;
+    padding-top: 4.5vw;
 }
 .glassFull{
     width: 100vw;
@@ -29,8 +27,8 @@
     border: solid 1px #ffffff96;
 }
 .glass{
-    width: 1414px;
-    height: 863px;
+    width: 1290px;
+    height: 800px;
     background-color: #9696960f;
     backdrop-filter: blur(32px);
     box-shadow: 0 0 42px;

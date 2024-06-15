@@ -17,7 +17,7 @@ function Start() {
             <div className={styles['container']}>
                 <div className={styles['textContainer']}>
                 </div>
-                <button className={styles['btnStyle']} onClick={() => handleClick('/write')}>작성하기<Icon icon="formkit:right"></Icon></button>
+                <button className={styles['btnStyle']} onClick={() => handleClick('/capsule')}>작성하기<Icon icon="formkit:right"></Icon></button>
                 <button className={styles['btnStyle']} onClick={() => handleClick('/gallery')}>갤러리 바로가기<Icon icon="formkit:right"></Icon></button>
             </div>
             

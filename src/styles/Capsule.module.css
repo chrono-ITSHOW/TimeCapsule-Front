@@ -40,6 +40,9 @@
 .qr {
     width: 258px;
     height: 258px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image: url('../../public/images/qr.png');
 }
 
 .img-button {

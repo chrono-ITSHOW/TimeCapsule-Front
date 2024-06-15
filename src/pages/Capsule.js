@@ -7,16 +7,17 @@ import { OrbitControls } from "@react-three/drei";
 import { Canvas } from '@react-three/fiber';
 
 const Capsule = () => {
-    const imageUrls = [
-        'https://cdn.imweb.me/thumbnail/20210304/035d01c442580.png',
-        'https://health.chosun.com/site/data/img_dir/2023/07/17/2023071701753_0.jpg',
-        'https://m.ministorypet.com/web/product/big/202208/ee2eeb094842d1f42bcb689ede6d6638.jpg',
-        'https://cdn.womaneconomy.co.kr/news/photo/202310/219358_427481_4850.jpg',
-        'https://together-mud.kakaocdn.net/dn/ddUiy9/btsdGABygpb/MsARp4M5vZdcumFmyHKoN1/c360.jpg'
-    ];
 
-    const randomIndex = Math.floor(Math.random() * imageUrls.length);
-    const randomImageUrl = imageUrls[randomIndex];
+    const images = [ // 강아지, 고양이, 다람쥐, 벨루가, 오리, 코알라, 토끼, 판다
+        'https://images.pexels.com/photos/2174209/pexels-photo-2174209.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+        'https://images.pexels.com/photos/86243/pexels-photo-86243.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+        'https://images.pexels.com/photos/8590539/pexels-photo-8590539.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+        'https://images.pexels.com/photos/64219/dolphin-marine-mammals-water-sea-64219.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+        'https://images.pexels.com/photos/162140/duckling-birds-yellow-fluffy-162140.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+        'https://images.pexels.com/photos/2610309/pexels-photo-2610309.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+        'https://images.pexels.com/photos/4588065/pexels-photo-4588065.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+        'https://images.pexels.com/photos/3608263/pexels-photo-3608263.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
+    ];
 
     return (
         <div>
@@ -34,8 +35,7 @@ const Capsule = () => {
                     </div>
 
                     <div className={styles['capsule-img']}>
-                        <div className={styles['qr']}>
-                        </div>
+                        <div className={styles['qr']}></div>
                         <div className={styles['img-button']}>
                             <p>랜덤 이미지</p>
                         </div>

@@ -4,10 +4,45 @@ import BackgroundImg from '../components/BackgroundImg';
 import styles from '../styles/Capsule.module.css';
 
 import { OrbitControls } from "@react-three/drei";
-import { Canvas, useLoader } from '@react-three/fiber';
+import { Canvas } from '@react-three/fiber';
 import { RepeatWrapping, TextureLoader } from 'three';
+import axios from 'axios';
+
+const createFileFromImageUrl = async (imageUrl) => {
+    try {
+        const response = await fetch(imageUrl);
+        const blob = await response.blob();
+        const file = new File([blob], "image.jpg", { type: "image/jpeg" });
+        return file;
+    } catch (error) {
+        console.error("파일 생성 중 에러 발생", error);
+        return null;
+    }
+};
 
 const Capsule = () => {
+
+    const sendImage  = async() => {
+        try {
+            const file = await createFileFromImageUrl(currentImage);
+            const formData = new FormData();
+            formData.append("capsuleImage", file);
+
+            const res = await axios.post(`${process.env.REACT_APP_HOST}/letters/capsule`, formData, {
+                'capsuleImage': formData
+            });
+            
+            if (res.status === 200) {
+                console.log("이미지 업로드 성공", res.status)
+            }
+            else {
+                console.log(res.status)
+            }
+
+        } catch (error) {
+            console.error("에러 발생", error)
+        }    
+    }
 
     const images = [ // 강아지, 고양이, 다람쥐, 벨루가, 오리, 코알라, 토끼, 판다
         'https://images.pexels.com/photos/2174209/pexels-photo-2174209.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
@@ -38,6 +73,7 @@ const Capsule = () => {
             const newImage = images[randomIndex];
             setCurrentImage(newImage);
             updateTexture(newImage);
+            // console.log(currentImage);
         });
     };
 
@@ -60,16 +96,16 @@ const Capsule = () => {
                         </Canvas>
                     </div>
 
-                    <div className={styles['capsule-img']} onClick={changeImage}> 
+                    <div className={styles['capsule-img']}> 
                         <div className={styles['qr']}></div>
-                        <div className={styles['img-button']} >
+                        <div className={styles['img-button']} onClick={changeImage} >
                             <p>랜덤 이미지</p>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <Glass />
+            <Glass sendImage={sendImage} />
             <BackgroundImg />
         </div>
     );

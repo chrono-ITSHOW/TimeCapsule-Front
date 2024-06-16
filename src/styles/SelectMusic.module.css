@@ -1,54 +1,29 @@
-.inputContainer{
-    display: flex;
-    flex-direction: column;
-    row-gap: 38px;
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  row-gap: 38px;
 }
-.writeContainer{
-    display: flex;
-    position: absolute;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    column-gap: 99px;
+.writeContainer {
+  display: flex;
+  position: absolute;
+  flex-direction: column-reverse;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  column-gap: 99px;
 }
-.titleBox{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: white;
+.titleBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
 }
-.titleBox> div{
-    font-size: 32px;
-    font-weight: 600;   
+.titleBox > div {
+  font-size: 32px;
+  font-weight: 600;
 }
-.titleBox > span{
-    font-size: 24px;
-    font-weight: 400;
-}
-.inputBox{
-    box-sizing: border-box;
-    width: 50.2vw;
-    height: 6.5vh;
-    border: 2px solid white;
-    border-radius: 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-left: 1vw;
-    background-color: rgba(255, 255, 255, 0.25);
-}
-.inputBox > input{
-    text-shadow: 0 0 10px #00000020;
-    background-color: transparent;
-    height: 29px;
-    box-sizing: border-box;
-    border:none;
-    outline: none;
-    margin-left: 0.7vw;
-    font-size: 24px;
-}
-
-.inputBox > input{
-   width: 90%;
+.titleBox > span {
+  font-size: 24px;
+  font-weight: 400;
 }

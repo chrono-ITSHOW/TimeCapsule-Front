@@ -1,19 +1,31 @@
-import React from "react"
-import MusicItem from "./MusicItem"
-import styles from '../../styles/MusicList.module.css'
-function MusicList({list, selectMusic}){
+import React, { useEffect } from "react";
+import MusicItem from "./MusicItem";
+import styles from "../../styles/MusicList.module.css";
+function MusicList({ dataList, selectedMusic, setSelectedMusic }) {
+  const isSelected = (selectedData) => {
+    console.log(selectedData);
+    return selectedMusic === selectedData;
+  };
 
-    return (
-        <div className={styles['musicList']}>
-            {
-                list.map((item, index) => {
-                    return(
-                    <MusicItem item={item} index={index} selectMusic={selectMusic} key={index}/>
-                    )  
-                }) 
-            }
-        </div>
-    )
+  const selectMusicItem = (item) => {
+    if (isSelected(item)) {
+      setSelectedMusic(item);
+    }
+  };
+
+  return (
+    <div className={styles["musicList"]}>
+      {dataList.map((item, index) => (
+        <MusicItem
+          item={item}
+          index={index}
+          isSelected={isSelected(item)}
+          selectMusicItem={selectMusicItem}
+          key={index}
+        />
+      ))}
+    </div>
+  );
 }
 
 export default MusicList;

@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 import styles from '../styles/Glass.module.css';
 import NavStyles from '../styles/Nav.module.css';
 
-const Glass = ({ onPopupOpen }) => {
+const Glass = ({ onPopupOpen, sendImage }) => {
   const location = useLocation();
   const currentPage = location.pathname;
 
@@ -32,7 +32,7 @@ const Glass = ({ onPopupOpen }) => {
             onClick={handleImageClick}
           />
         ) : (
-        <Icon icon="icon-park-solid:right-c" className={NavStyles['btnStyles']} />
+        <Icon icon="icon-park-solid:right-c" className={NavStyles['btnStyles']} onClick={sendImage} />
         )}
       </div>
     </div>

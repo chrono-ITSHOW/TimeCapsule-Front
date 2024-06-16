@@ -60,9 +60,9 @@ const Capsule = () => {
                         </Canvas>
                     </div>
 
-                    <div className={styles['capsule-img']} onClick={changeImage}> 
+                    <div className={styles['capsule-img']}> 
                         <div className={styles['qr']}></div>
-                        <div className={styles['img-button']} >
+                        <div className={styles['img-button']} onClick={changeImage} >
                             <p>랜덤 이미지</p>
                         </div>
                     </div>

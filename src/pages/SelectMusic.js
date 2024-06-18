@@ -7,7 +7,7 @@ import BackgroundImg from "../components/BackgroundImg";
 function SelectMusic({ seletedMusicRef }) {
   const navigate = useNavigate();
   const sendImage = () => {
-    navigate(`/Write`);
+    navigate(`/write`);
   };
   return (
     <div>

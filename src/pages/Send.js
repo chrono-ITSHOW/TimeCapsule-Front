@@ -38,7 +38,7 @@ function Send() {
                     <>
                         <Icon icon="solar:letter-linear" style={{fontSize:"47px"}}/>
                         <p style={{fontSize:"32px"}}>1월 1일의 당신에게 편지가 무사히 도착했어요 :&#41;</p>
-                        <div className={styles['galleryBtn']} onClick={() => handleClick('/capsule')}>갤러리 바로가기<Icon icon="ep:right"></Icon></div>
+                        <div className={styles['galleryBtn']} onClick={() => handleClick('/gallery')}>갤러리 바로가기<Icon icon="ep:right"></Icon></div>
                     </>
                 )}
             </div>

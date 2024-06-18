@@ -39,7 +39,6 @@ const Capsule = () => {
                 'capsuleImage': formData
             });
 
-            console.log(res.data);
             if (res.status === 200) {
                 console.log("서버 응답:", res.data); 
                 const capsulePath = res.data.capsule; 

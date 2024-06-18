@@ -12,7 +12,7 @@ import { CapsuleContext } from './CapsuleProvider';
 const Write = ({ seletedMusicRef }) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { capsulePath, capsuleId } = useContext(CapsuleContext);
+  const { capsulePath } = useContext(CapsuleContext);
   const [id, setId] = useState('');
   const [email, setEmail] = useState('');
   const [inputText, setInputText] = useState('');
@@ -75,10 +75,12 @@ const Write = ({ seletedMusicRef }) => {
       const res = await axios.get(`${process.env.REACT_APP_HOST}/letters`);
       const letters = res.data;
 
-      const matchingLetter = letters.find(letter => letter.capsule === capsuleImage);
+      console.log(letters);
+      const matchingLetter = letters.find(letter => letter.capsule === capsulePath);
       if (matchingLetter) {
         setId(matchingLetter.id);
         setCapsuleImage(matchingLetter.capsule);
+        console.log(matchingLetter.id)
       } else {
       }
     } catch (error) {
@@ -99,10 +101,11 @@ const Write = ({ seletedMusicRef }) => {
       data.recipient = "2025년의 나에게";
     }
     try {
-      const res = await axios.patch(`${process.env.REACT_APP_HOST}/letters/${capsuleId}`, data);
+      const res = await axios.patch(`${process.env.REACT_APP_HOST}/letters/${id}`, data);
       if (res.status === 200) {
         console.log("성공~");
         console.log(res.data);
+        navigate('/send')
       } else {
         console.log("실패!", res.status);
       }

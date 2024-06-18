@@ -1,27 +1,34 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import Glass from "../components/Glass";
-import BackgroundImg from "../components/BackgroundImg";
-import Input from "../components/input";
-import styles from "../styles/Write.module.css";
-import popupStyles from "../styles/Popup.module.css";
-import { Icon } from "@iconify/react";
+import React, { useState, useEffect, useContext } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import Glass from '../components/Glass';
+import BackgroundImg from '../components/BackgroundImg';
+import Input from '../components/input';
+import styles from '../styles/Write.module.css';
+import popupStyles from '../styles/Popup.module.css';
+import { Icon } from '@iconify/react';
+import axios from 'axios';
+import { CapsuleContext } from './CapsuleProvider';
 
 const Write = ({ seletedMusicRef }) => {
-  //seletedMusicRef : 사용자가 선택한 음악 정보를 담고 있음
-  const [inputText, setInputText] = useState("");
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { capsulePath, capsuleId } = useContext(CapsuleContext);
+  const [id, setId] = useState('');
+  const [email, setEmail] = useState('');
+  const [inputText, setInputText] = useState('');
   const [isChecked, setIsChecked] = useState(false);
   const [isHeightExceeded, setIsHeightExceeded] = useState(false);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [capsuleImage, setCapsuleImage] = useState(capsulePath);
 
   const today = new Date();
   const year = today.getFullYear();
-  const month = String(today.getMonth() + 1).padStart(2, "0");
-  const day = String(today.getDate()).padStart(2, "0");
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const day = String(today.getDate()).padStart(2, '0');
   const formattedDate = `${year}.${month}.${day}`;
 
   const generateStyledText = () => {
-    const textWithLineBreaks = inputText.split("\n").map((line, index) => (
+    const textWithLineBreaks = inputText.split('\n').map((line, index) => (
       <React.Fragment key={index}>
         {line}
         <br />
@@ -40,7 +47,11 @@ const Write = ({ seletedMusicRef }) => {
       if (lengthDiff > 0) {
         setInputText(newText);
       }
-    }
+    };
+  };
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
   };
 
   const handleCheckboxChange = () => {
@@ -55,12 +66,54 @@ const Write = ({ seletedMusicRef }) => {
     setIsPopupOpen(false);
   };
 
-  const handleSend = () => {
+  const { getCapsule } = useContext(CapsuleContext);
+  const { setCapsulePath } = useContext(CapsuleContext);
+  console.log(capsulePath)
+
+  const allLetter = async () => {
+    try {
+      const res = await axios.get(`${process.env.REACT_APP_HOST}/letters`);
+      const letters = res.data;
+
+      const matchingLetter = letters.find(letter => letter.capsule === capsuleImage);
+      if (matchingLetter) {
+        setId(matchingLetter.id);
+        setCapsuleImage(matchingLetter.capsule);
+      } else {
+      }
+    } catch (error) {
+      console.error("서버 연결 실패", error);
+    }
+  };
+  useEffect(() => {
+    allLetter();
+  }, [capsuleImage]);
+
+  const handleSend = async () => {
+    const data = {
+      recipient: null,
+      email: email,
+      content: inputText,
+    };
+    if (isChecked) {
+      data.recipient = "2025년의 나에게";
+    }
+    try {
+      const res = await axios.patch(`${process.env.REACT_APP_HOST}/letters/${capsuleId}`, data);
+      if (res.status === 200) {
+        console.log("성공~");
+        console.log(res.data);
+      } else {
+        console.log("실패!", res.status);
+      }
+    } catch (error) {
+      console.error("서버 연결 실패", error);
+    }
     handlePopupClose();
   };
 
   useEffect(() => {
-    const styledTextElement = document.getElementById("styledText");
+    const styledTextElement = document.getElementById('styledText');
     if (styledTextElement.scrollHeight <= 450) {
       setIsHeightExceeded(false);
     } else {
@@ -68,23 +121,24 @@ const Write = ({ seletedMusicRef }) => {
     }
   }, [inputText]);
 
+  allLetter();
+
   return (
     <div>
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <div className={styles["writeContainer"]}>
-          <div className={styles["inputContainer"]}>
-            <Input
-              type="email"
-              text="나의 편지를 보낼 이메일을 작성해주세요!"
+        <div className={styles['writeContainer']}>
+          <div className={styles['inputContainer']}>
+            <Input 
+              type="email" 
+              text='나의 편지를 보낼 이메일을 작성해주세요!' 
+              onChange={handleEmailChange}
             />
             <textarea
               value={inputText}
               type="text"
-              placeholder="편지 내용을 작성해주세요!"
+              placeholder='편지 내용을 작성해주세요!'
               onChange={handleInputChange}
-              className={`${styles["textareaStyle"]} ${
-                isHeightExceeded ? styles["textareaError"] : ""
-              }`}
+              className={`${styles['textareaStyle']} ${isHeightExceeded ? styles['textareaError'] : ''}`}
             ></textarea>
             <div className={styles["check"]}>
               <input
@@ -92,60 +146,46 @@ const Write = ({ seletedMusicRef }) => {
                 className={styles["check1"]}
                 onChange={handleCheckboxChange}
               />
-              <label htmlFor="check1" style={{ fontSize: "20px" }}>
-                2025년의 너에게
-              </label>
+              <label htmlFor="check1" style={{ fontSize: "20px" }}>2025년의 너에게</label>
             </div>
           </div>
-          <div className={styles["letterContainer"]}>
+          <div className={styles['letterContainer']}>
             <div style={{ color: "#FF918A", textAlign: "center" }}>
-              <div
-                style={{ width: "54px", height: "54px", marginBottom: "26px" }}
-              ></div>
+              <div 
+                style={{ 
+                  width: "54px", 
+                  height: "54px", 
+                  margin: "0 auto",
+                  marginBottom: "26px", 
+                  backgroundImage: `url(${process.env.REACT_APP_HOST}/${capsuleImage})`,
+                  backgroundSize: 'cover' 
+                }}
+              >
+              </div>
               {formattedDate}
             </div>
             <div style={{ height: "450px", overflow: "hidden" }}>
               {generateStyledText()}
             </div>
-            {isChecked && (
-              <p className={styles["checkText"]}>2025년의 너에게</p>
-            )}
+            {isChecked && <p className={styles['checkText']}>2025년의 너에게</p>}
           </div>
-          {isHeightExceeded && (
-            <div className={styles["ErrorStyle"]}>글자 수가 초과했습니다</div>
-          )}
+          {isHeightExceeded && <div className={styles['ErrorStyle']}>글자 수가 초과했습니다</div>}
         </div>
       </div>
-      <div></div>
       <Glass onPopupOpen={handlePopupOpen} />
-
       <BackgroundImg />
       {isPopupOpen && (
-        <div className={popupStyles["popupBackground"]}>
-          <div className={popupStyles["popupStyle"]}>
-            <Icon
-              icon="solar:letter-linear"
-              className={popupStyles["iconStyle"]}
-            />
-            <p style={{ fontSize: "24px", color: "#000", textShadow: "none" }}>
-              편지를 전송할까요?
-            </p>
-            <p
-              style={{ fontSize: "16px", color: "#CDCDCD", textShadow: "none" }}
-            >
-              확인을 누르시면 이전으로 돌아갈 수 없어요
-            </p>
-            <button className={popupStyles["btnStyle"]} onClick={handleSend}>
-              전송하기
-            </button>
-          </div>
-          <p style={{ fontSize: "20px" }} onClick={handlePopupClose}>
-            이어서 작성하기
-          </p>
-        </div>
-      )}
-    </div>
-  );
+        <div className={popupStyles['popupBackground']}>
+          <div className={popupStyles['popupStyle']}>
+            <Icon icon="solar:letter-linear" className={popupStyles['iconStyle']} />
+            <p style={{ fontSize: "24px", color: "#000", textShadow: "none" }}>편지를 전송할까요?</p>
+            <p style={{ fontSize: "16px", color: "#CDCDCD", textShadow: "none" }}>확인을 누르시면 이전으로 돌아가라 수 없어요</p>
+            <button className={popupStyles['btnStyle']} onClick={handleSend}>전송하기</button>
+</div>
+<p style={{ fontSize: "20px" }} onClick={handlePopupClose}>이어서 작성하기</p>
+</div>
+)}
+</div>
+);
 };
-
 export default Write;

@@ -4,7 +4,11 @@ import styles from "../../styles/MusicItem.module.css";
 
 function MusicItem({ item, index, selectMusicItem, isSelected }) {
   return (
-    <div className={styles["musicItem"]} onClick={() => selectMusicItem(item)}>
+    <div
+      className={styles["musicItem"]}
+      onClick={() => selectMusicItem(item)}
+      style={{ backgroundColor: isSelected ? "white" : "transparent" }}
+    >
       <div
         style={{
           width: 20,
@@ -32,9 +36,8 @@ function MusicItem({ item, index, selectMusicItem, isSelected }) {
           fontSize: 15,
           fontWeight: 400,
           color: "rgba(0, 0, 0, 0.63)",
-          lineHeight: 20,
-          position: "relative",
-          top: 1,
+          height: 16,
+          width: "fit-content",
         }}
       >
         {item.title}

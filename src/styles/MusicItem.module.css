@@ -1,19 +1,21 @@
-
-.musicItem{
-    box-sizing: border-box;
-    width: 26.8vw;
-    height: 5vh;
-    background-color: rgba(255, 255, 255, 0.6);
-    border-radius: 12px;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    column-gap: 2.5vh;
-    padding: 16px 18px 16px 18px;
+.musicItem {
+  box-sizing: border-box;
+  position: relative;
+  width: 26.8vw;
+  height: 5vh;
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 12px;
+  z-index: 100;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  column-gap: 2.5vh;
+  padding: 16px 18px 16px 18px;
+  z-index: 100;
 }
-.icon{
-    color: rgba(0, 0, 0, 0.63) !important;
+.icon {
+  color: rgba(0, 0, 0, 0.63) !important;
 }
-.icondiv svg path{
-    fill: rgba(0, 0, 0, 0.63) !important;
+.icondiv svg path {
+  fill: rgba(0, 0, 0, 0.63) !important;
 }

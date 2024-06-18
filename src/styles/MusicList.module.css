@@ -1,5 +1,6 @@
 .musicList {
   box-sizing: border-box;
+  position: relative;
   width: 28vw;
   height: 37vh;
   border-radius: 15px;
@@ -10,4 +11,5 @@
   row-gap: 5px;
   padding: 12px;
   overflow: scroll;
+  z-index: 10;
 }

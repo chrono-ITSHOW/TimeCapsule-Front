@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import MusicList from "./MusicList";
 import { MusicCover } from "./MusicCover";
 import { SearchMusic } from "./SearchMusic";
 import axios from "axios";
 
-function Music() {
+function Music({ seletedMusicRef }) {
   const [dataList, setDataList] = useState([]);
   const [selectedMusic, setSelectedMusic] = useState({}); //선택된 음악
+  const [isPlayMusic, setPlayMusic] = useState(false);
+  const audioRef = useRef(null);
+  seletedMusicRef = { music_id: selectedMusic.id };
 
   //처음 실행 시 전체 리스트 불러오기
   useEffect(() => {
@@ -16,7 +19,6 @@ function Music() {
           `${process.env.REACT_APP_HOST}/music`
         );
         if (searchRes.status === 200) {
-          console.log(searchRes.data);
           setDataList(searchRes.data);
           setSelectedMusic(searchRes.data[0]);
         }
@@ -25,19 +27,24 @@ function Music() {
       }
     };
     getAllMusic();
-
-    console.log("dd");
   }, []);
 
   return (
     <>
-      <SearchMusic setDataList={setDataList} />
+      <SearchMusic
+        setDataList={setDataList}
+        setSelectedMusic={setSelectedMusic}
+      />
       <div style={{ display: "flex", columnGap: "1.1vw" }}>
         <div>
           <MusicCover
             dataList={dataList}
             setDataList={setDataList}
             selectedMusic={selectedMusic}
+            setSelectedMusic={setSelectedMusic}
+            audioRef={audioRef}
+            isPlayMusic={isPlayMusic}
+            setPlayMusic={setPlayMusic}
           />
         </div>
 
@@ -45,6 +52,9 @@ function Music() {
           dataList={dataList}
           selectedMusic={selectedMusic}
           setSelectedMusic={setSelectedMusic}
+          audioRef={audioRef}
+          isPlayMusic={isPlayMusic}
+          setPlayMusic={setPlayMusic}
         />
       </div>
     </>

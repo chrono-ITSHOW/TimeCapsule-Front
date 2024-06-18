@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Icon } from "@iconify/react";
 import axios from "axios";
 
-export function SearchMusic({ setDataList }) {
+export function SearchMusic({ setDataList, setSelectedMusic }) {
   const [inputValue, setValue] = useState("");
 
   const handleSearchInput = (e) => {
@@ -24,8 +24,8 @@ export function SearchMusic({ setDataList }) {
         }
       );
       if (req.status === 200) {
-        console.log(req.data);
         setDataList(req.data);
+        setValue("");
       }
     } catch (error) {
       console.error("노래 검색 에러 발생", error);
@@ -60,6 +60,7 @@ const InputBox = styled.div`
   border-radius: 15px;
   background-color: rgba(255, 255, 255, 0.25);
   padding-left: 1vw;
+  z-index: 10;
 `;
 const Input = styled.input`
   box-sizing: border-box;

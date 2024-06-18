@@ -421,7 +421,7 @@ const Write = ({ selectedMusicRef }) => {
                     <div className={popupStyles['popupStyle']}>
                         <Icon icon="solar:letter-linear" className={popupStyles['iconStyle']} />
                         <p style={{ fontSize: "24px", color: "#000", textShadow: "none" }}>편지를 전송할까요?</p>
-                        <p style={{ fontSize: "16px", color: "#CDCDCD", textShadow: "none" }}>확인을 누르시면 이전으로 돌아가라 수 없어요</p>
+                        <p style={{ fontSize: "16px", color: "#CDCDCD", textShadow: "none" }}>확인을 누르시면 이전으로 돌아갈 수 없어요</p>
                         <button className={popupStyles['btnStyle']} onClick={handleSend}>전송하기</button>
                     </div>
                     <p style={{ fontSize: "20px" }} onClick={handlePopupClose}>이어서 작성하기</p>

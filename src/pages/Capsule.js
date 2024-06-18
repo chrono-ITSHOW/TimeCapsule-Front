@@ -1,4 +1,5 @@
-import React, { useState, useTransition } from 'react';
+import React, { useState, useTransition, useContext } from 'react';
+import { CapsuleContext } from './CapsuleProvider';
 import Glass from '../components/Glass';
 import BackgroundImg from '../components/BackgroundImg';
 import styles from '../styles/Capsule.module.css';
@@ -7,6 +8,7 @@ import { OrbitControls } from "@react-three/drei";
 import { Canvas } from '@react-three/fiber';
 import { RepeatWrapping, TextureLoader } from 'three';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const createFileFromImageUrl = async (imageUrl) => {
     try {
@@ -21,8 +23,13 @@ const createFileFromImageUrl = async (imageUrl) => {
 };
 
 const Capsule = () => {
+    const { getCapsule, getId } = useContext(CapsuleContext);
+    const [currentImage, setCurrentImage] = useState(null);
+    const [texture, setTexture] = useState(null);
+    const [isPending, startTransition] = useTransition();
+    const navigate = useNavigate();
 
-    const sendImage  = async() => {
+    const sendImage = async () => {
         try {
             const file = await createFileFromImageUrl(currentImage);
             const formData = new FormData();
@@ -31,18 +38,24 @@ const Capsule = () => {
             const res = await axios.post(`${process.env.REACT_APP_HOST}/letters/capsule`, formData, {
                 'capsuleImage': formData
             });
-            
+
+            console.log(res.data);
             if (res.status === 200) {
-                console.log("이미지 업로드 성공", res.status)
-            }
-            else {
-                console.log(res.status)
+                console.log("서버 응답:", res.data); 
+                const capsulePath = res.data.capsule; 
+                getCapsule(capsulePath);
+                getId(res.data.id);
+                console.log("생성된 캡슐 경로:", capsulePath);
+                console.log("생성된 캡슐 ID:", res.data.id);
+                navigate('/selectmusic');
+            } else {
+                console.log(res.status);
             }
 
         } catch (error) {
-            console.error("에러 발생", error)
-        }    
-    }
+            console.error("에러 발생", error);
+        }
+    };
 
     const images = [ // 강아지, 고양이, 다람쥐, 벨루가, 오리, 코알라, 토끼, 판다
         'https://images.pexels.com/photos/2174209/pexels-photo-2174209.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
@@ -54,10 +67,6 @@ const Capsule = () => {
         'https://images.pexels.com/photos/4588065/pexels-photo-4588065.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
         'https://images.pexels.com/photos/3608263/pexels-photo-3608263.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
     ];
-
-    const [currentImage, setCurrentImage] = useState(null);
-    const [texture, setTexture] = useState(null);
-    const [isPending, startTransition] = useTransition();
 
     const updateTexture = (image) => {
         const newTexture = new TextureLoader().load(image);
@@ -73,7 +82,6 @@ const Capsule = () => {
             const newImage = images[randomIndex];
             setCurrentImage(newImage);
             updateTexture(newImage);
-            // console.log(currentImage);
         });
     };
 

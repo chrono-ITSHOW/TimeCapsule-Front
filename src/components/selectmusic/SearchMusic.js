@@ -37,7 +37,7 @@ export function SearchMusic({ setDataList, setSelectedMusic }) {
         icon="basil:search-solid"
         width="24px"
         height="24px"
-        style={{ color: "#C7C8CB" }}
+        style={{ color: "rgb(255, 255, 255, 0.3)" }}
       />
       <Input
         type="text"
@@ -56,10 +56,9 @@ const InputBox = styled.div`
   align-items: center;
   width: 50.2vw;
   height: 6.5vh;
-  border: 2px solid white;
+  border: 2px solid rgb(255, 255, 255, 0.5);
   border-radius: 15px;
   background-color: rgba(255, 255, 255, 0.25);
-  padding-left: 1vw;
   z-index: 10;
 `;
 const Input = styled.input`
@@ -71,9 +70,9 @@ const Input = styled.input`
   text-shadow: 0 0 10px #00000020;
   outline: none;
   margin-left: 0.7vw;
-  font-size: 18px;
-  color: white;
+  font-size: 22px;
+  color: rgb(255, 255, 255, 0.5);
   &::placeholder {
-    color: white;
+    color: rgb(255, 255, 255, 0.5);
   }
 `;

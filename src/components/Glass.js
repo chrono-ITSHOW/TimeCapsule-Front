@@ -28,6 +28,7 @@ const Glass = ({ onPopupOpen, sendImage }) => {
           <img
             src='/images/send.png'
             className={NavStyles['btnStyles']}
+            style={{marginTop:"0.1vw"}}
             alt='보내기'
             onClick={handleImageClick}
           />

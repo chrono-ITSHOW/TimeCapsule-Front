@@ -5,8 +5,9 @@
   row-gap: 40px;
   align-items: center;
   justify-content: center;
-  bottom: 18.5vw;
-  margin-left: 2vw
+  bottom: 16.8vw;
+  margin-left: 2vw;
+  z-index: 1000;
 }
 .loading {
   align-items: center;

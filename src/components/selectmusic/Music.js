@@ -30,7 +30,7 @@ function Music({ seletedMusicRef }) {
   }, []);
 
   return (
-    <>
+    <div style={{display:"flex", flexDirection:"column", rowGap:"1.1vw"}}>
       <SearchMusic
         setDataList={setDataList}
         setSelectedMusic={setSelectedMusic}
@@ -57,7 +57,7 @@ function Music({ seletedMusicRef }) {
           setPlayMusic={setPlayMusic}
         />
       </div>
-    </>
+    </div>
   );
 }
 export default Music;

@@ -41,7 +41,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    row-gap: 24px;
+    row-gap: 21px;
     width: 400px;
     /* text-align: center; */
     /* align-items: center; */

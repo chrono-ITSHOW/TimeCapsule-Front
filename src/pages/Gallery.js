@@ -2,21 +2,31 @@ import React from "react";
 // import SphareItem from '../components/gallery/SphareItem'
 import { Canvas } from "@react-three/fiber";
 import BoxPhysics from "../components/gallery/BoxPhysics";
-
-const color = 0xffffff;
-const intensity = 1;
+import StartPageRedirect from "../components/gallery/StartPageRedirect";
 
 function Gallery() {
-  // let itemList = [];
-  //   const addItem = () => {
-  //     for(var i=0; i<10; i++){
-  //       itemList.push(<SphareItem/>);
-  //     }
-  //   }
-
   return (
-    <BoxPhysics />
-    // <div></div>
+    <>
+      <div
+        style={{
+          position: "relative",
+          width: "100vw",
+          zIndex: 100,
+          margin: "auto",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <img
+          src="/images/timecapsule.png"
+          alt="타임캡슐"
+          style={{ objectFit: "cover", width: "35vw", paddingTop: "3.5vw" }}
+        />
+      </div>
+
+      <BoxPhysics />
+      <StartPageRedirect />
+    </>
   );
 }
 

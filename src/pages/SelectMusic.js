@@ -1,13 +1,29 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Glass from "../components/Glass";
 import Music from "../components/selectmusic/Music";
 import styles from "../styles/SelectMusic.module.css";
 import BackgroundImg from "../components/BackgroundImg";
-function SelectMusic({ seletedMusicRef }) {
+import axios from "axios";
+
+function SelectMusic() {
+  const seletedMusicRef = useRef({});
+  const userId = localStorage.getItem("user_id");
   const navigate = useNavigate();
-  const sendImage = () => {
-    navigate(`/write`);
+  const sendImage = async () => {
+    try {
+      const request = await axios.patch(
+        `${process.env.REACT_APP_HOST}/letters/${userId}/music`,
+        seletedMusicRef.current
+      );
+      console.log(request.status);
+      if (request.status === 200) {
+        console.log("음악 선택 완료", request.status);
+        navigate(`/write`);
+      }
+    } catch (error) {
+      console.error("음악 선택 실패", error);
+    }
   };
   return (
     <div>

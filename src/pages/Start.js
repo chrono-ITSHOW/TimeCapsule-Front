@@ -3,12 +3,22 @@ import { useNavigate } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 import BackgroundImg from '../components/BackgroundImg';
 import styles from '../styles/Start.module.css'
-import GlassFull from '../components/GlassFull'
+// import axios from 'axios';
 
 function Start() {
     const navigate = useNavigate();
 
     const handleClick = (path) => {
+    // const handleClick = async (path) => {
+        // if (path === '/capsule') {
+        //     try {
+        //       const res = await axios.post(`${process.env.REACT_APP_HOST}/letters/capsule`);
+        //         console.log('완료', res);
+        //     } catch (error) {
+        //         console.error("에러 발생", error);
+        //     }
+        // }
+
         navigate(path);
       };
 

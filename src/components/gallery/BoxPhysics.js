@@ -1,9 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { useRef } from "react";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
 import { Physics, useBox, useSphere, usePlane } from "@react-three/cannon";
-import { useThree, useFrame } from "@react-three/fiber";
+import { useThree, useFrame, useLoader } from "@react-three/fiber";
 import * as THREE from "three";
+import { TextureLoader } from "three";
+import axios from "axios";
+// import { OrbitControls  from "@react-three/drei";
+import { CapsuleContext } from "../../pages/CapsuleProvider";
+//plane
 const Plane = (props) => {
   const [ref] = usePlane(() => ({
     rotation: [-Math.PI / 2, 0, 0],
@@ -14,80 +19,118 @@ const Plane = (props) => {
   return (
     <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -10, 0]}>
       <planeGeometry args={[200, 200]} />
-      <meshStandardMaterial color="lightblue" />
+      <meshStandardMaterial transparent opacity={0} />
     </mesh>
   );
 };
 
+//box
 const Box = (props) => {
   const [ref] = useBox(() => ({
-    mass: 1,
+    mass: 0, // 정적 객체
     position: props.position,
-    type: "Static",
     args: props.size || [100, 1, 100],
     rotation: props.rotation,
+    type: "Static",
     ...props,
   }));
+
   return (
     <mesh ref={ref} {...props} receiveShadow>
       <boxGeometry args={props.size || [100, 1, 100]} />
-      <meshStandardMaterial transparent opacity={0.3} />
+      <meshStandardMaterial transparent opacity={0} />
     </mesh>
   );
 };
 
-const FallingBall = (props) => {
-  let radius = 4.5;
-  const [ref] = useSphere(() => ({
-    mass: 1,
-    position: props.position,
-    args: [radius],
-    material: {
-      restitution: 0.3, // 반발력을 높여서 공이 더 잘 튕겨나가도록 설정
-      friction: 0.1, // 마찰을 낮춰서 공이 더 자연스럽게 굴러가도록 설정
-    },
-    ...props,
-  }));
-  return (
-    <mesh ref={ref} {...props}>
-      <sphereGeometry args={[radius, 50, 50]} />
-      <meshStandardMaterial color="red" />
-    </mesh>
-  );
-};
-
-const Ball = (props) => {
-  let radius = 4;
+//ball
+const Ball = ({ image, position }) => {
+  let radius = 5;
   const [ref, api] = useSphere(() => ({
-    mass: 1,
-    position: props.position,
+    mass: 100000,
+    position: [position[0], position[1] + radius, position[2]],
     args: [radius],
     material: {
-      restitution: 0, // 반발력을 0으로 설정하여 튕김 없음
-      friction: 0.1, // 마찰 설정 유지
+      restitution: 0.01,
+      friction: 0.5,
     },
-    allowSleep: true, // sleep을 허용
-    sleepSpeedLimit: 0.1, // 이 속도 이하로 떨어지면 sleep 상태로 전환
-    sleepTimeLimit: 1, // 1초 동안 sleepSpeedLimit 이하이면 sleep 상태로 전환
-    ...props,
   }));
+
+  // 이미지 URL이 유효하지 않은 경우 기본 이미지를 사용
+  const validImage =
+    process.env.REACT_APP_HOST + "/" + image || "/images/cover1.jpg"; // 기본 이미지 경로로 수정 필요
+  const texture = useLoader(TextureLoader, validImage);
 
   useEffect(() => {
-    api.sleep(); // 컴포넌트가 마운트될 때 sleep 상태로 시작
+    api.velocity.set(0, 0, 0);
   }, [api]);
 
   return (
-    <mesh ref={ref} {...props} castShadow>
-      <sphereGeometry args={[radius, 50, 50]} />
-      <meshStandardMaterial color="#ffff" />
+    <mesh ref={ref} castShadow>
+      <sphereGeometry args={[radius, 32, 32]} />
+      <meshStandardMaterial map={texture} />
     </mesh>
   );
 };
 
-const Scene = ({ boxSize }) => {
+//fallingball
+const FallingBall = (props) => {
+  let radius = 4.5;
+  const { capsuleId } = useContext(CapsuleContext);
+  const [capsuleImage, setCapsuleImage] = useState(
+    `${process.env.PUBLIC_URL}/images/cover1.jpg`
+  );
+
+  useEffect(() => {
+    const getSentCapsuleLetter = async () => {
+      const id = localStorage.getItem("capsule_id");
+      console.log(id);
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_HOST}/letters/capsule/${id}`
+        );
+        if (response.status === 200) {
+          // let obj = response.data;
+          setCapsuleImage(
+            `${process.env.REACT_APP_HOST}/${response.data.capsule}`
+          );
+        }
+      } catch (error) {
+        console.error("보낸 캡슐 정보 가져오기 실패", error);
+      }
+    };
+    getSentCapsuleLetter();
+  }, [capsuleId, capsuleImage]);
+  console.log(capsuleImage);
+  const [ref] = useSphere(() => ({
+    mass: 8,
+    position: [
+      props.position[0],
+      props.position[1] + radius,
+      props.position[2],
+    ],
+    args: [radius],
+    material: {
+      restitution: 0.01,
+      friction: 0.9,
+    },
+  }));
+
+  const texture = useLoader(THREE.TextureLoader, capsuleImage);
+
+  return (
+    <mesh ref={ref} {...props}>
+      <sphereGeometry args={[radius, 50, 50]} />
+      <meshStandardMaterial map={texture} />
+    </mesh>
+  );
+};
+
+//scene
+const Scene = ({ boxSize, images }) => {
   const balls = [];
-  const numBalls = 50;
-  const ballRadius = 3; // 공의 반지름 설정
+  const numBalls = images.length;
+  const ballRadius = 3;
   const ballDiameter = ballRadius * 2;
   const positions = [];
 
@@ -108,13 +151,13 @@ const Scene = ({ boxSize }) => {
       newPos = [
         (Math.random() - 0.5) * (boxSize[0] - ballDiameter) +
           (Math.random() - 0.5) * 2,
-        ballRadius, // 모든 공의 Y축 위치를 공의 반지름만큼 설정
+        ballRadius,
         (Math.random() - 0.5) * (boxSize[2] - ballDiameter) +
           (Math.random() - 0.5) * 2,
       ];
     } while (isOverlapping(newPos));
     positions.push(newPos);
-    balls.push(<Ball key={i} position={newPos} />);
+    balls.push(<Ball key={i} position={newPos} image={images[i].capsule} />);
   }
 
   return (
@@ -147,54 +190,94 @@ const Scene = ({ boxSize }) => {
           rotation={[0, Math.PI / 2, 0]}
           size={[boxSize[2], boxSize[1], 1]}
         />
-        {balls}
-        <FallingBall
-          position={[
-            0, // X축 위치를 박스의 중앙으로 설정
-            boxSize[1] / 2, // Y축 치를 박스 높이의 절반으로 설정
-            ballRadius, // Z축 위치를 박스의 정 중앙에서 앞쪽으로 공의 반지름만큼 이동
-          ]}
+        <Box
+          position={[0, boxSize[1], 0]}
+          rotation={[0, 0, 0]}
+          size={[boxSize[0], 1, boxSize[2]]}
         />
+        {balls}
+        <FallingBall position={[0, boxSize[1] / 2, ballRadius]} />
       </Physics>
     </>
   );
 };
 
+//camerabehavior
 const CameraBehavior = () => {
   const { camera } = useThree();
 
+  useEffect(() => {
+    console
+      .log
+      // `lookAtPosition - x: ${camera.position.x}, y: ${camera.position.y}, z: ${camera.position.z}`
+      ();
+  }, [camera]);
   useFrame(() => {
-    // 현재 카메라 위치에서 살짝 위를 바라보도록 설정
     const lookAtPosition = new THREE.Vector3(
       camera.position.x,
-      camera.position.y - 10,
-      camera.position.z - 20
+      camera.position.y - 5,
+      camera.position.z - 30
     );
-    console.log(
-      `lookAtPosition - x: ${lookAtPosition.x}, y: ${lookAtPosition.y}, z: ${lookAtPosition.z}`
-    );
+
     camera.lookAt(lookAtPosition);
   });
 
   return null;
 };
 
-const BoxPhysics = () => {
-  const [boxSize, setBoxSize] = useState([96 - 10, 108 - 10, 54 - 10]);
+//scenebackground
+const SceneBackground = () => {
+  const { scene } = useThree();
+  const loader = new THREE.TextureLoader();
 
   useEffect(() => {
-    const handleResize = () => {
-      setBoxSize([96 - 10, 108 - 10, 54 / -10]);
+    loader.load(
+      "/images/galleryBackground.jpg", // 이미지 경로 확인
+      (texture) => {
+        scene.background = texture; // 텍스처 로드 성공 시 씬의 배경으로 설정
+      },
+      undefined,
+      (error) => {
+        console.error("배경 이미지 로드 실패:", error); // 로드 실패 시 콘솔에 에러 출력
+      }
+    );
+  }, [scene]);
+
+  return null;
+};
+
+//boxphysis
+const BoxPhysics = () => {
+  const [boxSize, setBoxSize] = useState([96 / 2, 108 / 2 - 10, 54 - 10]);
+  const [images, setImages] = useState([]);
+
+  useEffect(() => {
+    const fetchImages = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_HOST}/letters/capsules/latest`
+        );
+        if (response.status === 200) {
+          setImages(response.data);
+          console.log(response.data);
+        }
+      } catch (error) {
+        console.error("공 이미지 가져오기 실패", error);
+      }
     };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    fetchImages();
   }, []);
 
   return (
-    <Canvas camera={{ position: [0, 30, 40], fov: 30 }} shadows>
-      <Scene boxSize={boxSize} />
+    <Canvas
+      style={{ position: "absolute", top: 0, left: 0 }}
+      camera={{ position: [0, 19, 40], fov: 30 }}
+      shadows
+    >
+      <SceneBackground />
+      <Scene boxSize={boxSize} images={images} />
       <CameraBehavior />
-      <OrbitControls />
+      {/* <OrbitControls /> */}
     </Canvas>
   );
 };

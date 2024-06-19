@@ -392,49 +392,18 @@ const Write = () => {
                 2025년의 너에게
               </label>
             </div>
-          </div>
-          <div className={styles["letterContainer"]}>
-            <div style={{ color: "#FF918A", textAlign: "center" }}>
-              <div
-                style={{
-                  width: "70px",
-                  height: "70px",
-                  margin: "0 auto",
-                  marginBottom: "14px",
-                  backgroundSize: "cover",
-                }}
-              >
-                <Canvas
-                  style={{
-                    boxSizing: "border-box",
-                    width: "100%",
-                    height: "100%",
-                    backgroundColor: "#FFF",
-                    borderRadius: "100%",
-                    boxShadow: "inset 15px -20px 40px rgba(0, 0, 0, 0.2)",
-                  }}
-                  camera={{
-                    fov: 30,
-                    near: 1,
-                    aspect: window.innerWidth / window.innerHeight,
-                    far: 1000,
-                    position: [0, 0, 10],
-                  }}
-                >
-                  <OrbitControls />
-                  <mesh>
-                    <sphereGeometry args={[5, 32, 32]} />
-                    {texture && <meshBasicMaterial map={texture} />}
-                  </mesh>
-                </Canvas>
-              </div>
-              {formattedDate}
-            </div>
-            <div style={{ height: "450px", overflow: "hidden" }}>
-              {generateStyledText()}
-            </div>
-            {isChecked && (
-              <p className={styles["checkText"]}>2025년의 너에게</p>
+            <Glass onPopupOpen={handlePopupOpen} />
+            <BackgroundImg />
+            {isPopupOpen && (
+                <div className={popupStyles['popupBackground']}>
+                    <div className={popupStyles['popupStyle']}>
+                        <Icon icon="solar:letter-linear" className={popupStyles['iconStyle']} />
+                        <p style={{ fontSize: "24px", color: "#000", textShadow: "none" }}>편지를 전송할까요?</p>
+                        <p style={{ fontSize: "16px", color: "#CDCDCD", textShadow: "none" }}>확인을 누르시면 이전으로 돌아갈 수 없어요</p>
+                        <button className={popupStyles['btnStyle']} onClick={handleSend}>전송하기</button>
+                    </div>
+                    <p style={{ fontSize: "20px" }} onClick={handlePopupClose}>이어서 작성하기</p>
+                </div>
             )}
           </div>
           {isHeightExceeded && (

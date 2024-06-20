@@ -7,8 +7,8 @@ import styles from "../styles/Capsule.module.css";
 import { OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { RepeatWrapping, TextureLoader } from "three";
-import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const createFileFromImageUrl = async (imageUrl) => {
   try {
@@ -28,25 +28,28 @@ const Capsule = () => {
   const [texture, setTexture] = useState(null);
   const [isPending, startTransition] = useTransition();
   const navigate = useNavigate();
-  const location = useLocation();
-  const { id } = location.state;
 
   const sendImage = async () => {
     try {
       const file = await createFileFromImageUrl(currentImage);
       const formData = new FormData();
       formData.append("capsuleImage", file);
-      const res = await axios.patch(`${process.env.REACT_APP_HOST}/letters/capsule/${id}`, formData);
+
+      const res = await axios.post(
+        `${process.env.REACT_APP_HOST}/letters/capsule`,
+        formData,
+        {
+          capsuleImage: formData,
+        }
+      );
 
       if (res.status === 200) {
         console.log("서버 응답:", res.data);
         const capsulePath = res.data.capsule;
         getCapsule(capsulePath);
         getId(res.data.id);
-        // localStorage.setItem("user_id", res.data.id);
         console.log("생성된 캡슐 경로:", capsulePath);
-        // console.log("생성된 캡슐 ID:", res.data.id);
-        console.log(formData);
+        console.log("생성된 캡슐 ID:", res.data.id);
         navigate("/selectmusic");
       } else {
         console.log(res.status);

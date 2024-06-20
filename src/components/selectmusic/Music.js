@@ -9,7 +9,7 @@ function Music({ seletedMusicRef }) {
   const [selectedMusic, setSelectedMusic] = useState({}); //선택된 음악
   const [isPlayMusic, setPlayMusic] = useState(false);
   const audioRef = useRef(null);
-  seletedMusicRef.current = { music_id: selectedMusic.id };
+  seletedMusicRef = { music_id: selectedMusic.id };
 
   //처음 실행 시 전체 리스트 불러오기
   useEffect(() => {
@@ -30,7 +30,7 @@ function Music({ seletedMusicRef }) {
   }, []);
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", rowGap: "1.1vw" }}>
+    <div style={{display:"flex", flexDirection:"column", rowGap:"1.1vw"}}>
       <SearchMusic
         setDataList={setDataList}
         setSelectedMusic={setSelectedMusic}
